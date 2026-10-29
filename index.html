@@ -915,6 +915,10 @@
 body.no-group .tabs,body.no-group .container:not(#landing),body.no-group #onlineStatus,body.no-group #accessStatus,body.no-group #adminAccessBtn,body.no-group #changeGroupBtn,body.no-group .group-label{display:none!important}
 body:not(.no-group) #landing{display:none}
 body:not(.no-group) .brand-pre{display:none}
+.brand-pre{color:var(--text-main)}
+body.no-group .brand-link h1{display:none}
+.landing-title{text-align:center;font-size:clamp(28px,7vw,44px);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin:18px 0 16px;color:var(--text-main)}
+.landing-title b{color:var(--primary-blue)}
 .landing-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px}
 .landing-card select{width:100%;font:inherit;font-size:16px;font-weight:700;padding:14px;border-radius:10px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}
 .sb-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
@@ -943,7 +947,7 @@ body:not(.no-group) .brand-pre{display:none}
     <div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
-<div id="landing" class="container"><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
+<div id="landing" class="container"><h2 class="landing-title">Aqtobe BIL <b>Sport Time</b></h2><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
 <div class="section-header" style="margin-top:26px"><span class="section-title">🏆 School leaderboard</span></div>
 <div class="landing-card" id="schoolBoard"><div class="sb-empty">Loading…</div></div></div>
 <div class="tabs">
