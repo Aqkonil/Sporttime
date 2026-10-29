@@ -1231,7 +1231,7 @@ body.no-group .admin-actions{justify-self:end}
     const worldCupTrophyImg = "https://upload.wikimedia.org/wikipedia/commons/3/37/World_Cup_%28trophy%29.png";
 
     // Rating changes (used both in the calculations and in the info card)
-    const RATING_RULES = { goal: 0.05, assist: 0.025, ownGoal: 0.05, mvp: 0.1, win: 0.01 };
+    const RATING_RULES = { goal: 0.025, assist: 0.025, ownGoal: 0.05, mvp: 0.05, win: 0.01 };
     // Rating bonus for the final place of the team (1st, 2nd, 3rd)
     const PLACE_BONUSES = [0.1, 0.075, 0.05];
     const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 } };
