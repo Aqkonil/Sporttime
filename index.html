@@ -911,7 +911,7 @@
     
 .brand-link{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;min-width:0}
 .hdr-logo{width:38px;height:38px;border-radius:50%;flex-shrink:0}
-.group-label{margin-left:10px;font-weight:900;font-size:13px;color:var(--primary-blue);background:rgba(49,130,206,.15);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.group-label{margin-left:2px;font-weight:900;font-size:13px;color:var(--primary-blue);background:rgba(49,130,206,.15);border-radius:20px;padding:3px 10px;white-space:nowrap}
 body.no-group .tabs,body.no-group .container:not(#landing),body.no-group #onlineStatus,body.no-group #accessStatus,body.no-group #adminAccessBtn,body.no-group #changeGroupBtn,body.no-group .group-label{display:none!important}
 body:not(.no-group) #landing{display:none}
 .landing-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px}
@@ -938,11 +938,11 @@ body:not(.no-group) #landing{display:none}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <header>
-    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1>Aqtobe BIL <span>Sport Time</span></h1></a><span id="groupLabel" class="group-label"></span>
+    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1>Aqtobe BIL <span>Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
     <div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
-<div id="landing" class="container"><div class="section-header"><span class="section-title">Choose your class or group</span></div><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
+<div id="landing" class="container"><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
 <div class="section-header" style="margin-top:26px"><span class="section-title">🏆 School leaderboard</span></div>
 <div class="landing-card" id="schoolBoard"><div class="sb-empty">Loading…</div></div></div>
 <div class="tabs">
@@ -2380,9 +2380,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     function buildLanding() {
         const sel = document.getElementById('groupSelect');
         const opt = g => `<option value="${g.id}">${g.name}</option>`;
-        sel.innerHTML = '<option value="">Select your class or group…</option><optgroup label="Classes">' +
-            SCHOOL_GROUPS.filter(g => g.kind === 'class').map(opt).join('') + '</optgroup><optgroup label="Staff">' +
-            SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(opt).join('') + '</optgroup>';
+        sel.innerHTML = '<option value="">Select your class or group…</option>' + SCHOOL_GROUPS.map(opt).join('');
         sel.onchange = () => { if (sel.value) location.hash = sel.value; };
     }
 
