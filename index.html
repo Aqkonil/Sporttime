@@ -917,13 +917,19 @@ body:not(.no-group) #landing{display:none}
 body:not(.no-group) .brand-pre{display:none}
 .brand-pre{color:var(--text-main)}
 body.no-group .brand-st{display:none}
-.landing-title{text-align:center;font-size:clamp(18px,4.5vw,24px);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:22px 0 14px;color:var(--primary-blue)}
+.landing-title{text-align:center;font-size:clamp(32px,9vw,48px);line-height:1.1;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin:10px 0 16px;color:var(--primary-blue)}
+.picker{display:grid;gap:8px}
+.pk-row{display:flex;gap:8px}
+.pk-pill{flex:1;min-width:0;height:52px;font:inherit;font-size:21px;font-weight:900;color:var(--text-main);background:var(--card-bg);border:2px solid var(--card-border);border-radius:14px;cursor:pointer;transition:all .15s}
+.pk-pill:hover{border-color:var(--primary-blue)}
+.pk-pill.active{background:var(--primary-blue);border-color:var(--primary-blue);color:#fff}
+.pk-go{flex:1;height:60px;font:inherit;font-size:26px;font-weight:900;letter-spacing:1px;color:var(--primary-blue);background:rgba(49,130,206,.12);border:2px solid var(--primary-blue);border-radius:14px;cursor:pointer;animation:pkIn .15s ease-out}
+.pk-go:active,.pk-pill:active,.pk-staff:active{transform:scale(.97)}
+.pk-staff{flex:1;height:46px;font:inherit;font-size:15px;font-weight:800;color:var(--text-sub);background:none;border:2px dashed var(--card-border);border-radius:14px;cursor:pointer}
+.pk-staff:hover{border-color:var(--primary-blue);color:var(--primary-blue)}
+@keyframes pkIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .landing-card{background:none;border:none;padding:0}
 #schoolBoard{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px}
-.landing-card select{width:100%;min-height:58px;font:inherit;font-size:17px;font-weight:800;padding:0 52px 0 20px;border-radius:16px;border:2px solid var(--card-border);background:var(--card-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%233182ce' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 20px center;color:var(--text-main);-webkit-appearance:none;appearance:none;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:border-color .15s,box-shadow .15s}
-.landing-card select:hover{border-color:var(--primary-blue)}
-.landing-card select:focus{outline:none;border-color:var(--primary-blue);box-shadow:0 0 0 4px rgba(49,130,206,.18)}
-.landing-card select option{background:var(--card-bg);color:var(--text-main);font-weight:700}
 .sb-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
 .sb-tab{flex:1;white-space:nowrap;padding:10px 12px;border-radius:10px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-sub);font:inherit;font-size:13px;font-weight:800;cursor:pointer}
 .sb-tab.active{background:rgba(49,130,206,.15);border-color:var(--primary-blue);color:var(--primary-blue)}
@@ -950,7 +956,7 @@ body.no-group .brand-st{display:none}
     <div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
-<div id="landing" class="container"><h2 class="landing-title">Sport Time</h2><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
+<div id="landing" class="container"><h2 class="landing-title">Sport Time</h2><div class="picker" id="groupPicker"></div>
 <div class="section-header" style="margin-top:26px"><span class="section-title">🏆 School leaderboard</span></div>
 <div class="landing-card" id="schoolBoard"><div class="sb-empty">Loading…</div></div></div>
 <div class="tabs">
@@ -2386,10 +2392,18 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         { id: 'teachers', name: 'Teachers', sort: 12, kind: 'staff' }
     ];
     function buildLanding() {
-        const sel = document.getElementById('groupSelect');
-        const opt = g => `<option value="${g.id}">${g.name}</option>`;
-        sel.innerHTML = '<option value="">Select your class or group…</option>' + SCHOOL_GROUPS.map(opt).join('');
-        sel.onchange = () => { if (sel.value) location.hash = sel.value; };
+        const el = document.getElementById('groupPicker');
+        let open = null;
+        const go = id => { location.hash = id; };
+        const draw = () => {
+            el.innerHTML =
+                `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}">${g}</button>`).join('')}</div>` +
+                (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
+                `<div class="pk-row">${SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(g => `<button class="pk-staff" data-go="${g.id}">${g.name}</button>`).join('')}</div>`;
+            el.querySelectorAll('[data-grade]').forEach(b => b.onclick = () => { open = open === Number(b.dataset.grade) ? null : Number(b.dataset.grade); draw(); });
+            el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+        };
+        draw();
     }
 
     let schoolList = null, schoolMetric = 'goals';
