@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aqtobe BIL Sport Time</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -988,7 +988,7 @@ body.no-group .admin-actions{justify-self:end}
                 <option value="club">Champions League</option>
             </select>
             <div class="mode-cards">
-                <button type="button" class="mode-card active" data-mode="country" onclick="setTournamentMode('country')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gWC" x1="0" x2="1"><stop offset="0" stop-color="#f6e05e"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs><path d="M23 60h18l-1.5-7h-15z" fill="#276749"/><path d="M24.5 53c0-10 1.5-14 4-18-6-3-10-9-10-16C18.500 11 24 6 32 6s13.500 5 13.500 13c0 7-4 13-10 16 2.500 4 4 8 4 18z" fill="url(#gWC)"/><circle cx="32" cy="19" r="8" fill="#fff" fill-opacity=".28"/><path d="M26 46h12" stroke="#276749" stroke-width="3" stroke-linecap="round"/></svg><span>World Cup</span></button>
+                <button type="button" class="mode-card active" data-mode="country" onclick="setTournamentMode('country')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gWC" x1="0" x2="1"><stop offset="0" stop-color="#f6e05e"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs><path d="M23 60h18l-1.5-7h-15z" fill="#276749"/><path d="M24.5 53c0-10 1.5-14 4-18-6-3-10-9-10-16C18.500 11 24 6 32 6s13.500 5 13.5 13c0 7-4 13-10 16 2.5 4 4 8 4 18z" fill="url(#gWC)"/><circle cx="32" cy="19" r="8" fill="#fff" fill-opacity=".28"/><path d="M26 46h12" stroke="#276749" stroke-width="3" stroke-linecap="round"/></svg><span>World Cup</span></button>
                 <button type="button" class="mode-card" data-mode="club" onclick="setTournamentMode('club')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gUCL" x1="0" x2="1"><stop offset="0" stop-color="#e2e8f0"/><stop offset="1" stop-color="#8fa1b8"/></linearGradient></defs><path d="M20 8h24v14c0 8-5 14-12 14s-12-6-12-14z" fill="url(#gUCL)"/><path d="M20 12h-8c0 8 3 13 9 14M44 12h8c0 8-3 13-9 14" fill="none" stroke="#8fa1b8" stroke-width="3" stroke-linecap="round"/><rect x="29" y="36" width="6" height="12" fill="#8fa1b8"/><path d="M22 57h20l-3-9H25z" fill="url(#gUCL)"/><circle cx="32" cy="21" r="5" fill="#fff" fill-opacity=".45"/></svg><span>Champions League</span></button>
             </div>
         </div>
@@ -1231,10 +1231,10 @@ body.no-group .admin-actions{justify-self:end}
     const worldCupTrophyImg = "https://upload.wikimedia.org/wikipedia/commons/3/37/World_Cup_%28trophy%29.png";
 
     // Rating changes (used both in the calculations and in the info card)
-    const RATING_RULES = { goal: 0.075, assist: 0.05, ownGoal: 0.05, mvp: 0.10, win: 0.01 };
+    const RATING_RULES = { goal: 0.05, assist: 0.025, ownGoal: 0.05, mvp: 0.1, win: 0.01 };
     // Rating bonus for the final place of the team (1st, 2nd, 3rd)
-    const PLACE_BONUSES = [0.10, 0.075, 0.05];
-    const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.10, goldenBoot: 0.05, goldenAssist: 0.05 } };
+    const PLACE_BONUSES = [0.1, 0.075, 0.05];
+    const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 } };
 
     function renderRatingRules() {
         const grid = document.getElementById('ratingRulesGrid');
@@ -1271,7 +1271,7 @@ body.no-group .admin-actions{justify-self:end}
     }
 
     // ---------- Tournament awards ----------
-    const AWARD_RULES = { goldenBall: 0.10, goldenBoot: 0.05, goldenAssist: 0.05 };
+    const AWARD_RULES = { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 };
     const GOLDEN_BALL_WEIGHTS = { goal: 1, assist: 1, mvp: 1, place: [1.5, 1, 0.5] };
     const AWARD_DEFS = [
         { key: 'goldenBall',   title: "Ballon d'Or",   label: "BALLON D'OR",   color: '#d69e2e', desc: 'Best player of the tournament',
@@ -3950,8 +3950,8 @@ function syncAllGoalRows(saved) {
             const winnerTeam = s1 > s2 ? t1 : t2;
             winnerTeam.players.forEach(tp => {
                 const pl = playersData.find(p => p.id === tp.id);
-                if (pl) pl.rating = Math.min(10.0, pl.rating + RATING_RULES.win);
-                if (tp !== pl) tp.rating = Math.min(10.0, tp.rating + RATING_RULES.win);
+                if (pl) pl.rating = Math.min(10, pl.rating + RATING_RULES.win);
+                if (tp !== pl) tp.rating = Math.min(10, tp.rating + RATING_RULES.win);
             });
         }
 
@@ -3989,7 +3989,7 @@ function syncAllGoalRows(saved) {
                     scorer.goals += 1;
 
                     scorer.rating =
-                        Math.min(10.0, scorer.rating + RATING_RULES.goal);
+                        Math.min(10, scorer.rating + RATING_RULES.goal);
 
                     // GOAL = 2 MVP POINTS
                     matchScores[scorer.id] =
@@ -4005,7 +4005,7 @@ function syncAllGoalRows(saved) {
                     assistant.assists += 1;
 
                     assistant.rating =
-                        Math.min(10.0, assistant.rating + RATING_RULES.assist);
+                        Math.min(10, assistant.rating + RATING_RULES.assist);
 
                     // ASSIST = 1 MVP POINT
                     matchScores[assistant.id] =
@@ -4129,7 +4129,7 @@ function syncAllGoalRows(saved) {
 
                 mvpPlayer.rating =
                     Math.min(
-                        10.0,
+                        10,
                         mvpPlayer.rating + RATING_RULES.mvp
                     );
             }
