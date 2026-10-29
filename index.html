@@ -916,11 +916,14 @@ body.no-group .tabs,body.no-group .container:not(#landing),body.no-group #online
 body:not(.no-group) #landing{display:none}
 body:not(.no-group) .brand-pre{display:none}
 .brand-pre{color:var(--text-main)}
-body.no-group .brand-link h1{display:none}
-.landing-title{text-align:center;font-size:clamp(28px,7vw,44px);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin:18px 0 16px;color:var(--text-main)}
-.landing-title b{color:var(--primary-blue)}
-.landing-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px}
-.landing-card select{width:100%;font:inherit;font-size:16px;font-weight:700;padding:14px;border-radius:10px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}
+body.no-group .brand-st{display:none}
+.landing-title{text-align:center;font-size:clamp(18px,4.5vw,24px);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:22px 0 14px;color:var(--primary-blue)}
+.landing-card{background:none;border:none;padding:0}
+#schoolBoard{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px}
+.landing-card select{width:100%;min-height:58px;font:inherit;font-size:17px;font-weight:800;padding:0 52px 0 20px;border-radius:16px;border:2px solid var(--card-border);background:var(--card-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%233182ce' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 20px center;color:var(--text-main);-webkit-appearance:none;appearance:none;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:border-color .15s,box-shadow .15s}
+.landing-card select:hover{border-color:var(--primary-blue)}
+.landing-card select:focus{outline:none;border-color:var(--primary-blue);box-shadow:0 0 0 4px rgba(49,130,206,.18)}
+.landing-card select option{background:var(--card-bg);color:var(--text-main);font-weight:700}
 .sb-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
 .sb-tab{flex:1;white-space:nowrap;padding:10px 12px;border-radius:10px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-sub);font:inherit;font-size:13px;font-weight:800;cursor:pointer}
 .sb-tab.active{background:rgba(49,130,206,.15);border-color:var(--primary-blue);color:var(--primary-blue)}
@@ -943,11 +946,11 @@ body.no-group .brand-link h1{display:none}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <header>
-    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1><span class="brand-pre">Aqtobe BIL </span><span>Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
+    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1><span class="brand-pre">Aqtobe BIL </span><span class="brand-st">Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
     <div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
-<div id="landing" class="container"><h2 class="landing-title">Aqtobe BIL <b>Sport Time</b></h2><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
+<div id="landing" class="container"><h2 class="landing-title">Sport Time</h2><div class="landing-card"><select id="groupSelect" aria-label="Class or group"></select></div>
 <div class="section-header" style="margin-top:26px"><span class="section-title">🏆 School leaderboard</span></div>
 <div class="landing-card" id="schoolBoard"><div class="sb-empty">Loading…</div></div></div>
 <div class="tabs">
