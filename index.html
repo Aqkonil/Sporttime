@@ -925,12 +925,12 @@ body.no-group .brand-st{display:none}
 .pk-pill:hover{border-color:var(--primary-blue);transform:translateY(-2px)}
 .pk-pill.active{background:linear-gradient(135deg,#4299e1,#2b6cb0);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(49,130,206,.4);transform:translateY(-2px)}
 .pk-pill.active small{color:rgba(255,255,255,.8)}
-.pk-vs{flex:none;align-self:center;font-size:24px;animation:pkBall .6s ease-out}
-@keyframes pkBall{0%{transform:translateY(-14px) rotate(-180deg);opacity:0}60%{transform:translateY(3px) rotate(20deg);opacity:1}100%{transform:none}}
-.pk-go{flex:1;height:60px;font:inherit;font-size:26px;font-weight:900;letter-spacing:1px;color:var(--primary-blue);background:rgba(49,130,206,.12);border:2px solid var(--primary-blue);border-radius:14px;cursor:pointer;animation:pkIn .15s ease-out}
+.pk-vs{flex:none;align-self:center;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;letter-spacing:.5px;color:var(--primary-blue);background:rgba(49,130,206,.12);border:2px solid var(--primary-blue);animation:pkPop .25s ease-out}
+@keyframes pkPop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.pk-go{flex:1;height:60px;font:inherit;font-size:26px;font-weight:900;letter-spacing:1px;color:var(--text-main);background:var(--card-bg);border:2px solid var(--card-border);border-radius:14px;cursor:pointer;transition:all .15s;animation:pkIn .15s ease-out}.pk-go:hover{border-color:var(--primary-blue)}
 .pk-go.chosen,.pk-staff.chosen{background:linear-gradient(135deg,#4299e1,#2b6cb0);border:2px solid transparent;color:#fff;box-shadow:0 8px 20px rgba(49,130,206,.4);transform:scale(1.03)}
 .pk-go:active,.pk-pill:active,.pk-staff:active{transform:scale(.97)}
-.pk-staff{flex:1;height:34px;font:inherit;font-size:12px;font-weight:800;color:var(--text-sub);background:none;border:2px dashed var(--card-border);border-radius:12px;cursor:pointer;transition:all .15s}
+.pk-staff{flex:1;height:46px;font:inherit;font-size:15px;font-weight:800;color:var(--text-sub);background:none;border:2px dashed var(--card-border);border-radius:14px;cursor:pointer;transition:all .15s}
 .pk-staff:hover{border-color:var(--primary-blue);color:var(--primary-blue)}
 @keyframes pkIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .landing-card{background:none;border:none;padding:0}
@@ -951,6 +951,7 @@ body.no-group .brand-st{display:none}
 .pl-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;background:rgba(49,130,206,.15);color:var(--primary-blue);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;text-transform:uppercase}
 .pm-rating{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 @media(max-width:520px){header h1{font-size:15px!important;letter-spacing:.3px!important}.group-label{font-size:24px!important;letter-spacing:.3px!important}.hdr-logo{width:30px;height:30px}body.no-group header h1{font-size:13px!important;letter-spacing:0!important}.hdr-center{font-size:17px!important;letter-spacing:0!important}.group-label{margin-left:5px}}
+body.staff-group .group-label{font-size:18px!important}
 @media(max-width:400px){body.no-group .hdr-logo{display:none}}
 .picker{margin-top:4px}
 .hdr-center{display:none;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--primary-blue);white-space:nowrap}
@@ -2409,7 +2410,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         const draw = () => {
             el.innerHTML =
                 `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}"><b>${g}</b><small>grade</small></button>`).join('')}</div>` +
-                (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><span class="pk-vs">⚽</span><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
+                (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><span class="pk-vs">VS</span><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
                 `<div class="pk-row">${SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(g => `<button class="pk-staff" data-go="${g.id}">${g.id === 'tutors' ? '🎓' : '👨‍🏫'} ${g.name}</button>`).join('')}</div>`;
             el.querySelectorAll('[data-grade]').forEach(b => b.onclick = () => { open = open === Number(b.dataset.grade) ? null : Number(b.dataset.grade); draw(); });
             el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go, b));
@@ -6624,6 +6625,7 @@ function syncAllGoalRows(saved) {
         if (!grp) { document.body.classList.add('no-group'); renderSchoolLeaderboard(); return; }
         GROUP_ID = grp.id; GROUP_NAME = grp.name; APP_STATE_ID = grp.sort;
         document.getElementById('groupLabel').textContent = grp.name;
+        if (grp.kind !== 'class') document.body.classList.add('staff-group');
         await restoreAdminSession();
 
         showOnlineStatus("🔄 Connecting...");
