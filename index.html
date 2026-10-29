@@ -917,12 +917,16 @@ body:not(.no-group) #landing{display:none}
 body:not(.no-group) .brand-pre{display:none}
 .brand-pre{color:var(--text-main)}
 body.no-group .brand-st{display:none}
-.landing-title{text-align:center;font-size:clamp(32px,9vw,48px);line-height:1.1;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin:10px 0 16px;color:var(--primary-blue)}
 .picker{display:grid;gap:8px}
 .pk-row{display:flex;gap:8px}
-.pk-pill{flex:1;min-width:0;height:52px;font:inherit;font-size:21px;font-weight:900;color:var(--text-main);background:var(--card-bg);border:2px solid var(--card-border);border-radius:14px;cursor:pointer;transition:all .15s}
-.pk-pill:hover{border-color:var(--primary-blue)}
-.pk-pill.active{background:var(--primary-blue);border-color:var(--primary-blue);color:#fff}
+.pk-pill{flex:1;min-width:0;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font:inherit;color:var(--text-main);background:var(--card-bg);border:2px solid var(--card-border);border-radius:16px;cursor:pointer;transition:all .18s}
+.pk-pill b{font-size:25px;line-height:1;font-weight:900}
+.pk-pill small{font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-sub)}
+.pk-pill:hover{border-color:var(--primary-blue);transform:translateY(-2px)}
+.pk-pill.active{background:linear-gradient(135deg,#4299e1,#2b6cb0);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(49,130,206,.4);transform:translateY(-2px)}
+.pk-pill.active small{color:rgba(255,255,255,.8)}
+.pk-vs{flex:none;align-self:center;font-size:24px;animation:pkBall .6s ease-out}
+@keyframes pkBall{0%{transform:translateY(-14px) rotate(-180deg);opacity:0}60%{transform:translateY(3px) rotate(20deg);opacity:1}100%{transform:none}}
 .pk-go{flex:1;height:60px;font:inherit;font-size:26px;font-weight:900;letter-spacing:1px;color:var(--primary-blue);background:rgba(49,130,206,.12);border:2px solid var(--primary-blue);border-radius:14px;cursor:pointer;animation:pkIn .15s ease-out}
 .pk-go:active,.pk-pill:active,.pk-staff:active{transform:scale(.97)}
 .pk-staff{flex:1;height:46px;font:inherit;font-size:15px;font-weight:800;color:var(--text-sub);background:none;border:2px dashed var(--card-border);border-radius:14px;cursor:pointer}
@@ -945,7 +949,13 @@ body.no-group .brand-st{display:none}
 .sb-empty{text-align:center;color:var(--text-sub);font-weight:700;padding:18px 0}
 .pl-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;background:rgba(49,130,206,.15);color:var(--primary-blue);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;text-transform:uppercase}
 .pm-rating{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-@media(max-width:520px){header h1{font-size:15px!important;letter-spacing:.3px!important}.group-label{font-size:24px!important;letter-spacing:.3px!important}.hdr-logo{width:30px;height:30px}.group-label{margin-left:5px}}
+@media(max-width:520px){header h1{font-size:15px!important;letter-spacing:.3px!important}.group-label{font-size:24px!important;letter-spacing:.3px!important}.hdr-logo{width:30px;height:30px}body.no-group header h1,.hdr-center{font-size:13px!important;letter-spacing:0!important}.group-label{margin-left:5px}}
+@media(max-width:400px){body.no-group .hdr-logo{display:none}}
+.picker{margin-top:4px}
+.hdr-center{display:none;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--primary-blue);white-space:nowrap}
+body.no-group header{display:grid;grid-template-columns:1fr auto 1fr}
+body.no-group .hdr-center{display:block}
+body.no-group .admin-actions{justify-self:end}
 </style>
 </head>
 <body data-theme="light">
@@ -953,10 +963,10 @@ body.no-group .brand-st{display:none}
 
 <header>
     <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1><span class="brand-pre">Aqtobe BIL </span><span class="brand-st">Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
-    <div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
+    <div class="hdr-center">Sport Time</div><div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
-<div id="landing" class="container"><h2 class="landing-title">Sport Time</h2><div class="picker" id="groupPicker"></div>
+<div id="landing" class="container"><div class="picker" id="groupPicker"></div>
 <div class="section-header" style="margin-top:26px"><span class="section-title">🏆 School leaderboard</span></div>
 <div class="landing-card" id="schoolBoard"><div class="sb-empty">Loading…</div></div></div>
 <div class="tabs">
@@ -2397,9 +2407,9 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         const go = id => { location.hash = id; };
         const draw = () => {
             el.innerHTML =
-                `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}">${g}</button>`).join('')}</div>` +
-                (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
-                `<div class="pk-row">${SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(g => `<button class="pk-staff" data-go="${g.id}">${g.name}</button>`).join('')}</div>`;
+                `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}"><b>${g}</b><small>grade</small></button>`).join('')}</div>` +
+                (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><span class="pk-vs">⚽</span><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
+                `<div class="pk-row">${SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(g => `<button class="pk-staff" data-go="${g.id}">${g.id === 'tutors' ? '🎓' : '👨‍🏫'} ${g.name}</button>`).join('')}</div>`;
             el.querySelectorAll('[data-grade]').forEach(b => b.onclick = () => { open = open === Number(b.dataset.grade) ? null : Number(b.dataset.grade); draw(); });
             el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
         };
