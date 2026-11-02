@@ -2443,6 +2443,17 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     ].map(name => ({ id: 'teacher_t_' + name.toLowerCase().replace(/[^a-z]+/g, '_').replace(/^_|_$/g, ''), name }));
 
     const TEACHER_START_RATING = 3;
+    let teacherIdMap = {};
+    // Replace old text ids of teachers in teams and saved stats
+    function applyTeacherIdMap() {
+        const keys = Object.keys(teacherIdMap);
+        if (!keys.length) return false;
+        activeTeams.forEach(t => (t.players || []).forEach(pl => { if (pl && teacherIdMap[pl.id] != null) pl.id = teacherIdMap[pl.id]; }));
+        keys.forEach(old => {
+            if (allTimeStats[old] !== undefined) { allTimeStats[teacherIdMap[old]] = allTimeStats[old]; delete allTimeStats[old]; }
+        });
+        return true;
+    }
     function addClassTeachersToRoster() {
         const teachers = GROUP_ID === 'teachers' ? TEACHERS_GROUP : (CLASS_TEACHERS[GROUP_ID] || []);
         let changed = false;
@@ -2477,10 +2488,22 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
                 changed = true;
             }
         });
+        // Player ids must be numbers (goal authors, adding players, team lists rely on that).
+        // Teachers used to have text ids, so they are converted to numbers here.
+        const nextId = () => playersData.reduce((m, p) => Math.max(m, Number(p.id) || 0), 0) + 1;
+        teacherIdMap = {};
+        playersData.forEach(p => {
+            if (typeof p.id === 'string') {
+                const old = p.id;
+                p.id = /^\d+$/.test(old) ? Number(old) : nextId();
+                if (String(p.id) !== old) teacherIdMap[old] = p.id;
+                changed = true;
+            }
+        });
         teachers.forEach(teacher => {
-            const existing = playersData.find(p => String(p.id) === teacher.id || norm(p.name) === norm(teacher.name));
+            const existing = playersData.find(p => norm(p.name) === norm(teacher.name));
             if (!existing) {
-                playersData.push({ id: teacher.id, name: teacher.name, rating: TEACHER_START_RATING, startRating: TEACHER_START_RATING, goals: 0, assists: 0, mvp: 0, logo: '' });
+                playersData.push({ id: nextId(), name: teacher.name, rating: TEACHER_START_RATING, startRating: TEACHER_START_RATING, goals: 0, assists: 0, mvp: 0, logo: '' });
                 changed = true;
             } else if (existing.startRating == null) {
                 // One-time: a teacher without a rating starts with 3; an already set rating is kept.
@@ -2678,12 +2701,13 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
                 ? data.all_time_stats
                 : {};
             applyRatingRulesFromState();
+            const idsFixed = applyTeacherIdMap();
 
             playersData.forEach(p => {
             });
 
             baseCycleRounds = activeTeams.length ? buildBaseCycleSchedule(activeTeams) : [];
-            if (corrected11AName || addedTeachers) await saveData();
+            if (corrected11AName || addedTeachers || idsFixed) await saveData();
         } else {
             addClassTeachersToRoster();
             await saveData();
