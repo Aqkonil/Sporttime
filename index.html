@@ -2424,7 +2424,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         ],
         '9A': [{ id: 'teacher_yessenali_9a', name: 'Yessenali agay' }],
         '9B': [{ id: 'teacher_nagashbek_9b', name: 'Nagashbek agay' }],
-        '10A': [{ id: 'teacher_abduluahid_10a', name: 'Abduluahid agay' }],
+        // 10A: Abduluahid agay is no longer added automatically (the extra copy with rating 3 was removed)
         '10B': [{ id: 'teacher_serzhan_10b', name: 'Serzhan agay' }],
         '11B': [
             { id: 'teacher_rustem_11b', name: 'Rustem agay' },
@@ -2449,26 +2449,42 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
             playersData = playersData.filter(p => !(String(p.name).trim() === 'Abylaikhan agay' && !p.goals && !p.assists && !p.mvp));
             if (playersData.length !== before) changed = true;
         }
+        if (GROUP_ID === '10A') {
+            // Delete the "Abduluahid agay" with rating 3 (only when another Abduluahid is in the roster)
+            const isAbdu = p => /abdu/i.test(String(p.name || ''));
+            const three = p => Number(p.rating) === 3 && (String(p.id) === 'teacher_abduluahid_10a' || /^abduluahid agay$/i.test(String(p.name || '').trim().replace(/\s+/g, ' ')));
+            if (playersData.filter(isAbdu).length > 1) {
+                const before = playersData.length;
+                playersData = playersData.filter(p => !(isAbdu(p) && three(p)));
+                if (playersData.length !== before) changed = true;
+            }
+        }
+        // Remove duplicates of the same teacher: the one with rating exactly 3 goes first;
+        // otherwise the one with the most activity stays.
+        const norm = v => String(v || '').trim().replace(/\s+/g, ' ').toLowerCase();
+        const activity = p => (Number(p.goals) || 0) + (Number(p.assists) || 0) + (Number(p.mvp) || 0);
+        const isThree = p => Number(p.rating) === TEACHER_START_RATING;
         teachers.forEach(teacher => {
-            const existing = playersData.find(p => String(p.id) === teacher.id || String(p.name).trim() === teacher.name);
+            const same = playersData.filter(p => norm(p.name) === norm(teacher.name));
+            if (same.length > 1) {
+                const others = same.filter(p => !isThree(p));
+                const pool = others.length && others.length < same.length ? others : same;
+                const keep = pool.slice().sort((x, y) => (activity(y) - activity(x)) || ((String(y.id) === teacher.id) - (String(x.id) === teacher.id)))[0];
+                playersData = playersData.filter(p => norm(p.name) !== norm(teacher.name) || p === keep);
+                changed = true;
+            }
+        });
+        teachers.forEach(teacher => {
+            const existing = playersData.find(p => String(p.id) === teacher.id || norm(p.name) === norm(teacher.name));
             if (!existing) {
                 playersData.push({ id: teacher.id, name: teacher.name, rating: TEACHER_START_RATING, startRating: TEACHER_START_RATING, goals: 0, assists: 0, mvp: 0, logo: '' });
                 changed = true;
             } else if (existing.startRating == null) {
-                // One-time: every teacher starts with rating 3.
-                existing.rating = TEACHER_START_RATING;
-                existing.startRating = TEACHER_START_RATING;
-                changed = true;
-            }
-        });
-        // Remove duplicates of the same teacher (keep the one with the most activity)
-        const norm = v => String(v || '').trim().replace(/\s+/g, ' ').toLowerCase();
-        const activity = p => (Number(p.goals) || 0) + (Number(p.assists) || 0) + (Number(p.mvp) || 0);
-        teachers.forEach(teacher => {
-            const same = playersData.filter(p => norm(p.name) === norm(teacher.name));
-            if (same.length > 1) {
-                const keep = same.slice().sort((a, b) => (activity(b) - activity(a)) || ((String(b.id) === teacher.id) - (String(a.id) === teacher.id)))[0];
-                playersData = playersData.filter(p => norm(p.name) !== norm(teacher.name) || p === keep);
+                // One-time: a teacher without a rating starts with 3; an already set rating is kept.
+                const r = Number(existing.rating);
+                const start = Number.isFinite(r) && r > 0 ? r : TEACHER_START_RATING;
+                existing.rating = start;
+                existing.startRating = start;
                 changed = true;
             }
         });
