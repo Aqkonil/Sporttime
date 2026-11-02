@@ -1231,10 +1231,10 @@ body.no-group .admin-actions{justify-self:end}
     const worldCupTrophyImg = "https://upload.wikimedia.org/wikipedia/commons/3/37/World_Cup_%28trophy%29.png";
 
     // Rating changes (used both in the calculations and in the info card)
-    const RATING_RULES = { goal: 0.075, assist: 0.05, ownGoal: 0.05, mvp: 0.10, win: 0.01 };
+    const RATING_RULES = { goal: 0.025, assist: 0.025, ownGoal: 0.05, mvp: 0.05, win: 0.01 };
     // Rating bonus for the final place of the team (1st, 2nd, 3rd)
     const PLACE_BONUSES = [0.10, 0.075, 0.05];
-    const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.10, goldenBoot: 0.05, goldenAssist: 0.05 } };
+    const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 } };
 
     function renderRatingRules() {
         const grid = document.getElementById('ratingRulesGrid');
@@ -1271,7 +1271,7 @@ body.no-group .admin-actions{justify-self:end}
     }
 
     // ---------- Tournament awards ----------
-    const AWARD_RULES = { goldenBall: 0.10, goldenBoot: 0.05, goldenAssist: 0.05 };
+    const AWARD_RULES = { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 };
     const GOLDEN_BALL_WEIGHTS = { goal: 1, assist: 1, mvp: 1, place: [1.5, 1, 0.5] };
     const AWARD_DEFS = [
         { key: 'goldenBall',   title: "Ballon d'Or",   label: "BALLON D'OR",   color: '#d69e2e', desc: 'Best player of the tournament',
