@@ -2461,6 +2461,17 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
                 changed = true;
             }
         });
+        // Remove duplicates of the same teacher (keep the one with the most activity)
+        const norm = v => String(v || '').trim().replace(/\s+/g, ' ').toLowerCase();
+        const activity = p => (Number(p.goals) || 0) + (Number(p.assists) || 0) + (Number(p.mvp) || 0);
+        teachers.forEach(teacher => {
+            const same = playersData.filter(p => norm(p.name) === norm(teacher.name));
+            if (same.length > 1) {
+                const keep = same.slice().sort((a, b) => (activity(b) - activity(a)) || ((String(b.id) === teacher.id) - (String(a.id) === teacher.id)))[0];
+                playersData = playersData.filter(p => norm(p.name) !== norm(teacher.name) || p === keep);
+                changed = true;
+            }
+        });
         return changed;
     }
 
