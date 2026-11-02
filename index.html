@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aqtobe BIL Sport Time</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,11 @@
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Aqtobe BIL Sport Time"><link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Aqtobe BIL Sport Time">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/webp" href="logo.webp">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -959,14 +963,25 @@ body.staff-group .group-label{font-size:24px!important}
 body.no-group header{display:grid;grid-template-columns:1fr auto 1fr}
 body.no-group .hdr-center{display:block}
 body.no-group .admin-actions{justify-self:end}
+
+/* ===== School-wide Main Admin ===== */
+#platformAdminOverlay{display:none;position:fixed;inset:0;z-index:12000;background:rgba(7,15,30,.72);backdrop-filter:blur(7px);padding:14px;overflow:auto;align-items:center;justify-content:center}
+#platformAdminOverlay.show{display:flex}
+.pa-dialog{width:min(920px,100%);max-height:94vh;overflow:auto;background:var(--card-bg);color:var(--text-main);border:1px solid var(--card-border);border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.4)}
+.pa-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--card-border);position:sticky;top:0;background:var(--card-bg);z-index:2}
+.pa-mark{width:42px;height:42px;object-fit:cover;border-radius:12px}.pa-head-main{flex:1;min-width:0}.pa-title{font-size:18px;font-weight:950}.pa-sub{font-size:11px;color:var(--text-sub);font-weight:700}.pa-close{border:0;background:var(--input-bg);color:var(--text-main);border-radius:10px;width:38px;height:38px;font-size:20px;cursor:pointer}
+.pa-body{padding:18px 20px 22px}.pa-login{max-width:420px;margin:20px auto;text-align:center}.pa-login img{width:76px;height:76px;border-radius:20px;object-fit:cover}.pa-login h2{font-size:22px;margin:12px 0 5px}.pa-login p{font-size:12px;color:var(--text-sub);margin-bottom:18px}.pa-input,.pa-select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main);font:inherit;font-size:14px;margin:6px 0 12px}.pa-btn{border:0;border-radius:11px;padding:11px 15px;background:var(--primary-blue);color:white;font:inherit;font-weight:900;cursor:pointer}.pa-btn:disabled{opacity:.5;cursor:not-allowed}.pa-btn.secondary{background:var(--input-bg);border:1px solid var(--card-border);color:var(--text-main)}.pa-btn.danger{background:#c53030}.pa-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}.pa-toolbar h2{font-size:19px;font-weight:950}.pa-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pa-card{border:1px solid var(--card-border);background:var(--card-bg);border-radius:16px;padding:15px;min-width:0}.pa-card h3{font-size:14px;font-weight:950;margin-bottom:8px}.pa-muted{font-size:11px;color:var(--text-sub);font-weight:700;line-height:1.5}.pa-classes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:12px 0}.pa-class{display:flex;align-items:center;gap:6px;border:1px solid var(--card-border);border-radius:9px;padding:8px 7px;font-size:12px;font-weight:900;background:var(--input-bg)}.pa-class input{accent-color:var(--primary-blue)}.pa-field-label{display:block;font-size:11px;font-weight:900;color:var(--text-sub);margin:10px 0 4px}.pa-identity-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:7px 0}.pa-identity-row b{font-size:12px}.pa-identity-row input{width:100%;padding:9px;border-radius:9px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}.pa-preview{background:var(--input-bg);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-top:12px;font-size:12px;line-height:1.65}.pa-list{display:grid;gap:8px;margin-top:10px}.pa-item{border:1px solid var(--card-border);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between}.pa-item-main{min-width:0;flex:1}.pa-item-title{font-size:13px;font-weight:950}.pa-item-sub{font-size:11px;color:var(--text-sub);font-weight:700;margin-top:3px}.pa-item-actions{display:flex;gap:6px;flex-wrap:wrap}.pa-item-actions .pa-btn{font-size:11px;padding:8px 10px}.pa-error{color:#e53e3e;font-size:12px;font-weight:800;margin-top:8px}.pa-success{color:#38a169;font-size:12px;font-weight:800;margin-top:8px}.pa-teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.pa-team{border:1px solid var(--card-border);border-radius:10px;padding:10px}.pa-team strong{display:block;margin-bottom:5px}.pa-team div{font-size:11px;color:var(--text-sub);line-height:1.5}
+body.no-group #mainAdminOpenBtn{display:inline-flex}
+@media(max-width:650px){.pa-grid{grid-template-columns:1fr}.pa-classes{grid-template-columns:repeat(3,minmax(0,1fr))}.pa-body{padding:14px}.pa-head{padding:14px}}
+
 </style>
 </head>
 <body data-theme="light">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <header>
-    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt=""><h1><span class="brand-pre">Aqtobe BIL </span><span class="brand-st">Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
-    <div class="hdr-center">Sport Time</div><div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
+    <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt="BIL logo"><h1><span class="brand-pre">Aqtobe BIL </span><span class="brand-st">Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
+    <div class="hdr-center">Sport Time</div><div class="admin-actions"><button class="admin-btn" id="mainAdminOpenBtn" onclick="openPlatformAdmin()" title="Main administrator">🏅</button><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
 <div id="landing" class="container"><div class="picker" id="groupPicker"></div>
@@ -988,7 +1003,7 @@ body.no-group .admin-actions{justify-self:end}
                 <option value="club">Champions League</option>
             </select>
             <div class="mode-cards">
-                <button type="button" class="mode-card active" data-mode="country" onclick="setTournamentMode('country')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gWC" x1="0" x2="1"><stop offset="0" stop-color="#f6e05e"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs><path d="M23 60h18l-1.5-7h-15z" fill="#276749"/><path d="M24.5 53c0-10 1.5-14 4-18-6-3-10-9-10-16C18.500 11 24 6 32 6s13.500 5 13.500 13c0 7-4 13-10 16 2.500 4 4 8 4 18z" fill="url(#gWC)"/><circle cx="32" cy="19" r="8" fill="#fff" fill-opacity=".28"/><path d="M26 46h12" stroke="#276749" stroke-width="3" stroke-linecap="round"/></svg><span>World Cup</span></button>
+                <button type="button" class="mode-card active" data-mode="country" onclick="setTournamentMode('country')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gWC" x1="0" x2="1"><stop offset="0" stop-color="#f6e05e"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs><path d="M23 60h18l-1.5-7h-15z" fill="#276749"/><path d="M24.5 53c0-10 1.5-14 4-18-6-3-10-9-10-16C18.500 11 24 6 32 6s13.500 5 13.5 13c0 7-4 13-10 16 2.5 4 4 8 4 18z" fill="url(#gWC)"/><circle cx="32" cy="19" r="8" fill="#fff" fill-opacity=".28"/><path d="M26 46h12" stroke="#276749" stroke-width="3" stroke-linecap="round"/></svg><span>World Cup</span></button>
                 <button type="button" class="mode-card" data-mode="club" onclick="setTournamentMode('club')"><svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><defs><linearGradient id="gUCL" x1="0" x2="1"><stop offset="0" stop-color="#e2e8f0"/><stop offset="1" stop-color="#8fa1b8"/></linearGradient></defs><path d="M20 8h24v14c0 8-5 14-12 14s-12-6-12-14z" fill="url(#gUCL)"/><path d="M20 12h-8c0 8 3 13 9 14M44 12h8c0 8-3 13-9 14" fill="none" stroke="#8fa1b8" stroke-width="3" stroke-linecap="round"/><rect x="29" y="36" width="6" height="12" fill="#8fa1b8"/><path d="M22 57h20l-3-9H25z" fill="url(#gUCL)"/><circle cx="32" cy="21" r="5" fill="#fff" fill-opacity=".45"/></svg><span>Champions League</span></button>
             </div>
         </div>
@@ -1233,7 +1248,7 @@ body.no-group .admin-actions{justify-self:end}
     // Rating changes (used both in the calculations and in the info card)
     const RATING_RULES = { goal: 0.025, assist: 0.025, ownGoal: 0.05, mvp: 0.05, win: 0.01 };
     // Rating bonus for the final place of the team (1st, 2nd, 3rd)
-    const PLACE_BONUSES = [0.10, 0.075, 0.05];
+    const PLACE_BONUSES = [0.1, 0.075, 0.05];
     const DEFAULT_RATING_RULES = { rating: { ...RATING_RULES }, place: [...PLACE_BONUSES], awards: { goldenBall: 0.2, goldenBoot: 0.1, goldenAssist: 0.1 } };
 
     function renderRatingRules() {
@@ -1665,7 +1680,7 @@ body.no-group .admin-actions{justify-self:end}
         document.getElementById('pmName').textContent = p.name;
         document.getElementById('pmAwards').innerHTML = playerModalAwardsHtml(p);
         { const av = document.getElementById('pmAvatar'); av.textContent = (String(p.name).trim().charAt(0) || '?');
-        av.style.backgroundImage = p.avatar_url ? `url("${p.avatar_url}")` : ''; av.style.backgroundSize = 'cover'; av.style.backgroundPosition = 'center'; av.style.color = p.avatar_url ? 'transparent' : ''; av.style.display = p.avatar_url ? '' : 'none'; }
+        av.style.backgroundImage = p.avatar_url ? `url("${p.avatar_url}")` : ''; av.style.backgroundSize = 'cover'; av.style.backgroundPosition = 'center'; av.style.color = p.avatar_url ? 'transparent' : ''; }
         document.getElementById('pmRating').textContent = formatRating(p.rating);
 
         const g = document.getElementById('pmGrowth');
@@ -2774,7 +2789,8 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     }
 
     function avatarHtml(p) {
-        return p.avatar_url ? `<img class="pl-av" src="${esc(p.avatar_url)}" alt="" loading="lazy">` : '';
+        const letter = esc(String(p.name || '?').trim().charAt(0) || '?');
+        return p.avatar_url ? `<img class="pl-av" src="${esc(p.avatar_url)}" alt="" loading="lazy">` : `<div class="pl-av">${letter}</div>`;
     }
 
     function renderPlayers() {
@@ -3949,8 +3965,8 @@ function syncAllGoalRows(saved) {
             const winnerTeam = s1 > s2 ? t1 : t2;
             winnerTeam.players.forEach(tp => {
                 const pl = playersData.find(p => p.id === tp.id);
-                if (pl) pl.rating = Math.min(10.0, pl.rating + RATING_RULES.win);
-                if (tp !== pl) tp.rating = Math.min(10.0, tp.rating + RATING_RULES.win);
+                if (pl) pl.rating = Math.min(10, pl.rating + RATING_RULES.win);
+                if (tp !== pl) tp.rating = Math.min(10, tp.rating + RATING_RULES.win);
             });
         }
 
@@ -3988,7 +4004,7 @@ function syncAllGoalRows(saved) {
                     scorer.goals += 1;
 
                     scorer.rating =
-                        Math.min(10.0, scorer.rating + RATING_RULES.goal);
+                        Math.min(10, scorer.rating + RATING_RULES.goal);
 
                     // GOAL = 2 MVP POINTS
                     matchScores[scorer.id] =
@@ -4004,7 +4020,7 @@ function syncAllGoalRows(saved) {
                     assistant.assists += 1;
 
                     assistant.rating =
-                        Math.min(10.0, assistant.rating + RATING_RULES.assist);
+                        Math.min(10, assistant.rating + RATING_RULES.assist);
 
                     // ASSIST = 1 MVP POINT
                     matchScores[assistant.id] =
@@ -4128,7 +4144,7 @@ function syncAllGoalRows(saved) {
 
                 mvpPlayer.rating =
                     Math.min(
-                        10.0,
+                        10,
                         mvpPlayer.rating + RATING_RULES.mvp
                     );
             }
@@ -6663,7 +6679,139 @@ function syncAllGoalRows(saved) {
 
         subscribeToOnlineChanges();
     };
+
+
+// ================= SCHOOL-WIDE MAIN ADMIN / MIX / INTERCLASS =================
+const PLATFORM_ADMIN_EMAIL = 'admin@aqtobebil.app';
+let platformAdminSession = false;
+let platformAdminBusy = false;
+let platformAdminCompetitions = [];
+let platformAdminRoster = {};
+const PA_CLASS_IDS = ['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'];
+
+function paEscape(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function paOverlay(){return document.getElementById('platformAdminOverlay');}
+function openPlatformAdmin(){
+  const ov=paOverlay(); if(!ov) return; ov.classList.add('show');
+  if(platformAdminSession) renderPlatformAdmin(); else renderPlatformAdminLogin();
+}
+function closePlatformAdmin(){const ov=paOverlay();if(ov)ov.classList.remove('show');}
+function renderPlatformAdminLogin(message=''){
+ const body=document.getElementById('platformAdminBody'); if(!body)return;
+ body.innerHTML=`<div class="pa-login"><img src="logo.webp" alt="BIL"><h2>Main Administrator</h2><p>School-wide tournaments and Mix mode</p><form id="paLoginForm"><input class="pa-input" id="paPassword" type="password" autocomplete="current-password" placeholder="Main admin password" required><button class="pa-btn" style="width:100%" type="submit">Sign in</button></form>${message?`<div class="pa-error">${paEscape(message)}</div>`:''}<p style="margin-top:14px">Use the password for ${PLATFORM_ADMIN_EMAIL}. It is not stored in this website.</p></div>`;
+ document.getElementById('paLoginForm').onsubmit=async e=>{e.preventDefault();await platformAdminLogin(document.getElementById('paPassword').value);};
+}
+async function platformAdminLogin(password){
+ if(platformAdminBusy)return; platformAdminBusy=true;
+ try{
+  // Supabase Auth has one active session per browser. This sign-in replaces any class-admin session.
+  await supabaseClient.auth.signOut();
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email:PLATFORM_ADMIN_EMAIL,password});
+  if(error||!data?.user){renderPlatformAdminLogin('Incorrect password or sign-in failed.');return;}
+  const {data:row,error:checkError}=await supabaseClient.from('platform_admins').select('user_id').eq('user_id',data.user.id).maybeSingle();
+  if(checkError||!row){await supabaseClient.auth.signOut();renderPlatformAdminLogin('This account is not registered as a platform administrator.');return;}
+  platformAdminSession=true; await loadPlatformAdminCompetitions(); renderPlatformAdmin();
+ }catch(e){console.error(e);renderPlatformAdminLogin('Could not connect to the database. Check the SQL setup.');}
+ finally{platformAdminBusy=false;}
+}
+async function platformAdminLogout(){platformAdminSession=false;platformAdminCompetitions=[];await supabaseClient.auth.signOut();renderPlatformAdminLogin('Signed out.');}
+async function loadPlatformAdminCompetitions(){
+ const {data,error}=await supabaseClient.from('school_competitions').select('*').order('created_at',{ascending:false});
+ if(error){console.error(error);throw error;} platformAdminCompetitions=data||[];
+}
+function renderPlatformAdmin(){
+ const body=document.getElementById('platformAdminBody');if(!body)return;
+ body.innerHTML=`<div class="pa-toolbar"><div><h2>School competitions</h2><div class="pa-muted">Create and manage school-wide events for grades 7–11</div></div><button class="pa-btn secondary" onclick="platformAdminLogout()">Sign out</button></div>
+ <div class="pa-grid"><section class="pa-card"><h3>Create competition</h3><label class="pa-field-label">Competition name</label><input class="pa-input" id="paName" placeholder="e.g. BIL Football Cup" maxlength="80">
+ <label class="pa-field-label">Competition format</label><select class="pa-select" id="paType" onchange="paTypeChanged()"><option value="mix">Mix — random mixed teams</option><option value="interclass">Inter-class — class vs class</option></select>
+ <label class="pa-field-label">Select classes</label><div class="pa-classes">${PA_CLASS_IDS.map(c=>`<label class="pa-class"><input type="checkbox" value="${c}" class="paClassCheck" onchange="paSelectionChanged()">${c}</label>`).join('')}</div>
+ <div id="paTypeFields"></div><button class="pa-btn" id="paCreateBtn" onclick="createSchoolCompetition()" style="width:100%;margin-top:12px">Create competition</button><div id="paCreateMessage"></div></section>
+ <section class="pa-card"><h3>Existing competitions</h3><div class="pa-muted">Saved separately from each class's existing tournament data.</div><div id="paCompetitionList" class="pa-list"></div></section></div>
+ <section class="pa-card" style="margin-top:14px"><h3>Competition details</h3><div id="paCompetitionDetails" class="pa-muted">Select a competition from the list to view its teams, fixtures and roster.</div></section>`;
+ paTypeChanged();renderPlatformAdminList();
+}
+function paSelectedClasses(){return [...document.querySelectorAll('.paClassCheck:checked')].map(x=>x.value);}
+function paTypeChanged(){
+ const type=document.getElementById('paType')?.value,box=document.getElementById('paTypeFields');if(!box)return;
+ if(type==='mix')box.innerHTML=`<label class="pa-field-label">Number of mixed teams</label><select class="pa-select" id="paTeamCount"><option value="2">2 teams</option><option value="3">3 teams</option><option value="4">4 teams</option><option value="5">5 teams</option><option value="6">6 teams</option></select><div class="pa-muted">Players are loaded from the selected classes and shuffled into balanced-size teams. No class roster is modified.</div>`;
+ else box.innerHTML=`<label class="pa-field-label">Team identity</label><select class="pa-select" id="paIdentityType"><option value="country">Countries</option><option value="club">Football clubs</option></select><div class="pa-muted">After selecting classes, enter a country or club for each class. The team name remains the class name.</div><div id="paIdentityInputs"></div>`;
+ paSelectionChanged();
+}
+function paSelectionChanged(){
+ const box=document.getElementById('paIdentityInputs');if(!box)return;
+ const chosen=paSelectedClasses();box.innerHTML=chosen.map(c=>`<div class="pa-identity-row"><b>${c}</b><input class="paIdentityInput" data-class="${c}" placeholder="${document.getElementById('paIdentityType')?.value==='club'?'Club name':'Country name'}"></div>`).join('')||'<div class="pa-muted">Choose at least one class.</div>';
+}
+async function paFetchRosters(classes){
+ const {data,error}=await supabaseClient.from('tournament_state').select('group_id, players').in('group_id',classes);
+ if(error)throw error;const map={};(data||[]).forEach(r=>{map[r.group_id]=Array.isArray(r.players)?r.players:[];});return map;
+}
+function paShuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function paRoundRobin(teams){const list=teams.map(t=>t.name);if(list.length<2)return[];const arr=[...list];if(arr.length%2)arr.push(null);const rounds=[];for(let r=0;r<arr.length-1;r++){const games=[];for(let i=0;i<arr.length/2;i++){const a=arr[i],b=arr[arr.length-1-i];if(a&&b)games.push({home:a,away:b,home_score:null,away_score:null,played:false});}rounds.push(games);arr.splice(1,0,arr.pop());}return rounds;}
+async function createSchoolCompetition(){
+ if(!platformAdminSession)return;const msg=document.getElementById('paCreateMessage');const name=document.getElementById('paName').value.trim();const type=document.getElementById('paType').value;const classes=paSelectedClasses();
+ if(!name){msg.innerHTML='<div class="pa-error">Enter a competition name.</div>';return;}if(!classes.length){msg.innerHTML='<div class="pa-error">Select at least one class.</div>';return;}
+ if(type==='interclass'&&classes.length<2){msg.innerHTML='<div class="pa-error">Inter-class tournaments need at least two classes.</div>';return;}
+ const btn=document.getElementById('paCreateBtn');btn.disabled=true;btn.textContent='Loading players…';
+ try{
+  const rosters=await paFetchRosters(classes);const teams=[];let matches=[];let teamConfig={};
+  if(type==='mix'){
+   const all=classes.flatMap(c=>(rosters[c]||[]).map(p=>({id:p.id,name:p.name,rating:Number(p.rating)||0,sourceClass:c})));
+   if(all.length<2)throw new Error('The selected classes do not have enough saved players yet.');
+   const count=Math.min(Number(document.getElementById('paTeamCount').value)||2,all.length);const shuffled=paShuffle(all);const buckets=Array.from({length:count},(_,i)=>({name:`Team ${i+1}`,players:[]}));
+   // snake draft after shuffle gives a more even headcount while keeping random assignment
+   shuffled.forEach((p,i)=>{const cycle=Math.floor(i/count),pos=i%count;const idx=cycle%2===0?pos:count-1-pos;buckets[idx].players.push(p);});
+   teams.push(...buckets);matches=paRoundRobin(buckets);teamConfig={mode:'random_mix',teams,player_count:all.length};
+  }else{
+   const identityType=document.getElementById('paIdentityType').value;const identities={};document.querySelectorAll('.paIdentityInput').forEach(i=>identities[i.dataset.class]=i.value.trim());
+   if(classes.some(c=>!identities[c]))throw new Error('Enter a country or club identity for every selected class.');
+   classes.forEach(c=>teams.push({name:c,identity_type:identityType,identity:identities[c],players:(rosters[c]||[]).map(p=>({id:p.id,name:p.name,rating:Number(p.rating)||0}))}));
+   matches=paRoundRobin(teams);teamConfig={mode:'interclass',identity_type:identityType,teams};
+  }
+  const payload={name,competition_type:type,status:'draft',class_ids:classes,team_config:teamConfig,matches,standings:{},settings:{created_from:'main_admin'},created_by:(await supabaseClient.auth.getUser()).data.user.id};
+  const {data,error}=await supabaseClient.from('school_competitions').insert(payload).select('*').single();if(error)throw error;
+  await loadPlatformAdminCompetitions();renderPlatformAdmin();showPaDetails(data.id);
+ }catch(e){console.error(e);msg.innerHTML=`<div class="pa-error">${paEscape(e.message||'Could not create competition.')}</div>`;}
+ finally{btn.disabled=false;btn.textContent='Create competition';}
+}
+function renderPlatformAdminList(){
+ const box=document.getElementById('paCompetitionList');if(!box)return;
+ box.innerHTML=platformAdminCompetitions.length?platformAdminCompetitions.map(c=>`<div class="pa-item"><div class="pa-item-main"><div class="pa-item-title">${paEscape(c.name)}</div><div class="pa-item-sub">${c.competition_type==='mix'?'Mix':'Inter-class'} · ${(c.class_ids||[]).join(', ')} · ${paEscape(c.status)}</div></div><div class="pa-item-actions"><button class="pa-btn secondary" onclick="showPaDetails('${c.id}')">Open</button><button class="pa-btn secondary" onclick="paSetStatus('${c.id}','active')">Start</button><button class="pa-btn secondary" onclick="paSetStatus('${c.id}','completed')">Finish</button><button class="pa-btn danger" onclick="paDelete('${c.id}')">Delete</button></div></div>`).join(''):'<div class="pa-muted" style="padding:14px 0">No school competitions yet.</div>';
+}
+function paStandings(c){
+ const names=(c.team_config?.teams||[]).map(t=>t.name);const table={};names.forEach(n=>table[n]={name:n,played:0,wins:0,draws:0,losses:0,gf:0,ga:0,pts:0});
+ (c.matches||[]).forEach(round=>(round||[]).forEach(m=>{if(!m.played||m.home_score==null||m.away_score==null)return;const h=table[m.home],a=table[m.away];if(!h||!a)return;const hs=Number(m.home_score),as=Number(m.away_score);h.played++;a.played++;h.gf+=hs;h.ga+=as;a.gf+=as;a.ga+=hs;if(hs>as){h.wins++;h.pts+=3;a.losses++;}else if(as>hs){a.wins++;a.pts+=3;h.losses++;}else{h.draws++;a.draws++;h.pts++;a.pts++;}}));
+ return Object.values(table).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf);
+}
+function showPaDetails(id){
+ const c=platformAdminCompetitions.find(x=>String(x.id)===String(id));const box=document.getElementById('paCompetitionDetails');if(!c||!box)return;
+ const teams=c.team_config?.teams||[];const isMix=c.competition_type==='mix';
+ const fixtures=(c.matches||[]).map((round,ri)=>`<div class="pa-preview"><b>Round ${ri+1}</b>${(round||[]).map((m,mi)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--card-border);padding-top:8px;margin-top:8px"><span><b>${paEscape(m.home)}</b> vs <b>${paEscape(m.away)}</b></span><span style="display:flex;align-items:center;gap:5px"><input id="paScore-${ri}-${mi}-h" type="number" min="0" max="99" value="${m.home_score??''}" style="width:48px;padding:7px;border:1px solid var(--card-border);border-radius:7px;background:var(--card-bg);color:var(--text-main)"><b>:</b><input id="paScore-${ri}-${mi}-a" type="number" min="0" max="99" value="${m.away_score??''}" style="width:48px;padding:7px;border:1px solid var(--card-border);border-radius:7px;background:var(--card-bg);color:var(--text-main)"><button class="pa-btn secondary" onclick="paSaveScore('${c.id}',${ri},${mi})">Save score</button></span></div>`).join('')}</div>`).join('');
+ const standings=paStandings(c);
+ box.innerHTML=`<div class="pa-toolbar"><div><div class="pa-item-title">${paEscape(c.name)}</div><div class="pa-item-sub">${paEscape(c.status)} · ${(c.class_ids||[]).join(', ')}</div></div><span class="pa-muted">${isMix?'Random mixed teams':'Class teams'}</span></div><div class="pa-teams">${teams.map(t=>`<div class="pa-team"><strong>${paEscape(t.name)}${t.identity?' · '+paEscape(t.identity):''}</strong><div>${(t.players||[]).map(p=>`${paEscape(p.name)}${p.sourceClass?' ('+paEscape(p.sourceClass)+')':''}`).join('<br>')||'No players saved'}</div></div>`).join('')}</div>${fixtures?`<h3 style="margin-top:16px">Fixtures & scores</h3>${fixtures}`:'<div class="pa-muted" style="margin-top:12px">No fixtures available.</div>'}<h3 style="margin-top:16px">Standings</h3><div class="pa-preview"><table style="width:100%;border-collapse:collapse;text-align:center;font-size:11px"><thead><tr><th style="text-align:left">Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>Pts</th></tr></thead><tbody>${standings.map(t=>`<tr><td style="text-align:left;padding:5px 2px">${paEscape(t.name)}</td><td>${t.played}</td><td>${t.wins}</td><td>${t.draws}</td><td>${t.losses}</td><td>${t.gf}</td><td>${t.ga}</td><td><b>${t.pts}</b></td></tr>`).join('')}</tbody></table></div>`;
+}
+async function paSaveScore(id,roundIndex,matchIndex){
+ const c=platformAdminCompetitions.find(x=>String(x.id)===String(id));if(!c)return;const hs=document.getElementById(`paScore-${roundIndex}-${matchIndex}-h`),as=document.getElementById(`paScore-${roundIndex}-${matchIndex}-a`);if(!hs||!as||hs.value===''||as.value===''){alert('Enter both scores.');return;}
+ const h=Number(hs.value),a=Number(as.value);if(!Number.isInteger(h)||!Number.isInteger(a)||h<0||a<0||h>99||a>99){alert('Scores must be whole numbers from 0 to 99.');return;}
+ const matches=JSON.parse(JSON.stringify(c.matches||[]));const match=matches[roundIndex]?.[matchIndex];if(!match)return;match.home_score=h;match.away_score=a;match.played=true;
+ const {error}=await supabaseClient.from('school_competitions').update({matches}).eq('id',id);if(error){alert('Could not save score: '+error.message);return;}await loadPlatformAdminCompetitions();showPaDetails(id);
+}
+async function paSetStatus(id,status){
+ const {error}=await supabaseClient.from('school_competitions').update({status}).eq('id',id);if(error){alert('Could not update status: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();showPaDetails(id);
+}
+async function paDelete(id){
+ if(!confirm('Delete this school competition?'))return;const {error}=await supabaseClient.from('school_competitions').delete().eq('id',id);if(error){alert('Could not delete: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();document.getElementById('paCompetitionDetails').textContent='Competition deleted.';
+}
+// If the user navigates between class and school views, keep the main admin entry available.
+window.addEventListener('load',()=>{const btn=document.getElementById('mainAdminOpenBtn');if(btn)btn.style.display='inline-flex';});
+
 </script>
+
+<div id="platformAdminOverlay" onclick="if(event.target===this)closePlatformAdmin()">
+ <section class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="paDialogTitle">
+  <header class="pa-head"><img class="pa-mark" src="logo.webp" alt="BIL"><div class="pa-head-main"><div class="pa-title" id="paDialogTitle">Aqtobe BIL · Main Admin</div><div class="pa-sub">School-wide competition control</div></div><button class="pa-close" onclick="closePlatformAdmin()" aria-label="Close">×</button></header>
+  <div class="pa-body" id="platformAdminBody"></div>
+ </section>
+</div>
 <div id="pwOverlay" class="pw-overlay">
     <div class="pw-box">
         <div class="dlg-icon t-info">🔑</div>
