@@ -6704,12 +6704,17 @@ const PA_CLASS_IDS = ['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'];
 function paEscape(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function paOverlay(){return document.getElementById('platformAdminOverlay');}
 async function openPlatformAdmin(){
+  // Prevent double-clicks and make the login flow explicit.
+  if(platformAdminBusy) return;
   if(platformAdminSession){ renderPlatformAdmin(); return; }
   const password = await askAdminPassword();
   if(password === null) return;
+  if(!password){ alert('Please enter the Main Admin password.'); return; }
   await platformAdminLogin(password);
 }
 function closePlatformAdmin(){const ov=paOverlay();if(ov)ov.classList.remove('show');}
+// Keep the header button connected to the Main Admin login function.
+window.openPlatformAdmin = openPlatformAdmin;
 async function platformAdminLogin(password){
  if(platformAdminBusy)return; platformAdminBusy=true;
  try{
@@ -6729,6 +6734,8 @@ async function loadPlatformAdminCompetitions(){
  if(error){console.error(error);throw error;} platformAdminCompetitions=data||[];
 }
 function renderPlatformAdmin(){
+ const overlay = paOverlay();
+ if (overlay) overlay.classList.add('show');
  const body=document.getElementById('platformAdminBody');if(!body)return;
  body.innerHTML=`<div class="section-header" style="margin-top:0"><span class="section-title">🔐 Admin</span><button class="btn btn-dark" style="width:auto;margin:0" onclick="platformAdminLogout()">Sign out</button></div><div class="rules-admin-note" style="margin:0 0 14px">School-wide competitions and Mix mode for grades 7–11.</div>
  <div class="pa-grid"><section class="admin-add-card" style="padding:18px"><h3 class="rules-admin-title">Create competition</h3><label class="pa-field-label">Competition name</label><input class="pa-input" id="paName" placeholder="e.g. BIL Football Cup" maxlength="80">
