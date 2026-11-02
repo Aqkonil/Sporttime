@@ -2407,7 +2407,8 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     let APP_STATE_ID = 0, GROUP_ID = null, GROUP_NAME = '';
     const SCHOOL_GROUPS = [
         ...['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'].map((n, i) => ({ id: n, name: n, sort: i + 1, kind: 'class' })),
-        { id: 'tutors', name: 'Tutors', sort: 11, kind: 'staff' }
+        { id: 'tutors', name: 'Tutors', sort: 11, kind: 'staff' },
+        { id: 'teachers', name: 'Teachers', sort: 12, kind: 'staff' }
     ];
 
     // Teachers are regular players in their own class rosters.
@@ -2427,15 +2428,15 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         ]
     };
 
-    const UNASSIGNED_TEACHERS = [
-        'T.Abylaikhan',
-        'K.Abylaikhan',
-        'Aimyrza agay',
-        'Yerkebulan agay'
-    ];
+    // Teachers group: its own page and roster, like Tutors.
+    const TEACHERS_GROUP = [
+        'Anuarbek agay', 'Nurkhan agay', 'Qanat agay', 'Yessenali agay', 'Nagashbek agay',
+        'Abduluahid agay', 'Serzhan agay', 'Rustem agay', 'Abylaikhan agay', 'T.Abylaikhan',
+        'K.Abylaikhan', 'Aimyrza agay', 'Yerkebulan agay', 'Yerassyl agay', 'Tynyshbek agay', 'Ramazan agay'
+    ].map((name, i) => ({ id: 'teacher_group_' + (i + 1), name }));
 
     function addClassTeachersToRoster() {
-        const teachers = CLASS_TEACHERS[GROUP_ID] || [];
+        const teachers = GROUP_ID === 'teachers' ? TEACHERS_GROUP : (CLASS_TEACHERS[GROUP_ID] || []);
         let changed = false;
         teachers.forEach(teacher => {
             if (!playersData.some(p => String(p.id) === teacher.id || String(p.name).trim() === teacher.name)) {
@@ -2450,17 +2451,13 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         const el = document.getElementById('groupPicker');
         let open = null;
         const go = (id, btn) => { btn.classList.add('chosen'); setTimeout(() => { location.hash = id; }, 300); };
-        let teachersOpen = false;
         const draw = () => {
             el.innerHTML =
                 `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}"><b>${g}</b><small>grade</small></button>`).join('')}</div>` +
                 (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><span class="pk-vs">VS</span><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
-                `<div class="pk-row"><button class="pk-staff" data-go="tutors">🎓 Tutors</button><button class="pk-staff" data-teachers="1">👨‍🏫 Teachers</button></div>` +
-                (teachersOpen ? `<div class="pk-row pk-teacher-list">${UNASSIGNED_TEACHERS.map(name => `<span class="pk-staff">${name}</span>`).join('')}</div>` : '');
+                `<div class="pk-row"><button class="pk-staff" data-go="tutors">🎓 Tutors</button><button class="pk-staff" data-go="teachers">👨‍🏫 Teachers</button></div>`;
             el.querySelectorAll('[data-grade]').forEach(b => b.onclick = () => { open = open === Number(b.dataset.grade) ? null : Number(b.dataset.grade); draw(); });
             el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go, b));
-            const teachersBtn = el.querySelector('[data-teachers]');
-            if (teachersBtn) teachersBtn.onclick = () => { teachersOpen = !teachersOpen; draw(); };
         };
         draw();
     }
