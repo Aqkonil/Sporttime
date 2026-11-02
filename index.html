@@ -462,6 +462,7 @@
         .player-chevron { font-size: 22px; font-weight: 800; color: var(--text-sub); padding-left: 8px; line-height: 1; }
         .player-info { display: flex; align-items: center; gap: 12px; }
         .player-info input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary-blue); cursor: pointer; }
+        .player-num { flex: 0 0 auto; min-width: 22px; text-align: center; font-size: 13px; font-weight: 900; color: var(--text-sub); font-variant-numeric: tabular-nums; }
         .player-name { font-weight: 800; font-size: 16px; color: var(--text-main); }
         .player-rating { background: rgba(49, 130, 206, 0.15); color: var(--primary-blue); border: 1px solid var(--card-border); border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 900; }
 
@@ -944,9 +945,12 @@ body.no-group .brand-st{display:none}
 .sb-tab.active{background:rgba(49,130,206,.15);border-color:var(--primary-blue);color:var(--primary-blue)}
 .sb-row{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--card-border)}
 .sb-row:last-child{border-bottom:none}
-.sb-rank{width:26px;text-align:center;font-weight:900;color:var(--text-sub)}
+.sb-rank{width:28px;height:28px;line-height:28px;flex:0 0 auto;border-radius:50%;text-align:center;font-weight:900;color:var(--text-sub)}
+.sb-rank.r1{background:linear-gradient(135deg,#f6d365,#e0a800);color:#5c4300}
+.sb-rank.r2{background:linear-gradient(135deg,#e2e8f0,#a0aec0);color:#2d3748}
+.sb-rank.r3{background:linear-gradient(135deg,#f0b27a,#b9733a);color:#4a2a0c}
 .sb-name{flex:1;min-width:0;font-weight:800;overflow-wrap:anywhere}
-.sb-class{font-size:11px;font-weight:900;color:var(--primary-blue);background:rgba(49,130,206,.15);border-radius:20px;padding:2px 8px;margin-left:6px;white-space:nowrap}
+.sb-class{font-size:11px;font-weight:900;color:hsl(var(--h,210) 65% 48%);background:hsl(var(--h,210) 70% 50% / .15);border-radius:20px;padding:2px 8px;margin-left:6px;white-space:nowrap}
 .sb-val{font-weight:900;font-size:18px;color:var(--primary-blue);font-variant-numeric:tabular-nums}
 .sb-aw{display:flex;gap:10px;align-items:center}
 .sb-aw span{display:inline-flex;align-items:center;gap:3px;font-weight:900;font-size:14px}
@@ -2431,16 +2435,29 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     // Teachers group: its own page and roster, like Tutors.
     const TEACHERS_GROUP = [
         'Anuarbek agay', 'Nurkhan agay', 'Qanat agay', 'Yessenali agay', 'Nagashbek agay',
-        'Abduluahid agay', 'Serzhan agay', 'Rustem agay', 'Abylaikhan agay', 'T.Abylaikhan',
+        'Abduluahid agay', 'Serzhan agay', 'Rustem agay', 'T.Abylaikhan',
         'K.Abylaikhan', 'Aimyrza agay', 'Yerkebulan agay', 'Yerassyl agay', 'Tynyshbek agay', 'Ramazan agay'
-    ].map((name, i) => ({ id: 'teacher_group_' + (i + 1), name }));
+    ].map(name => ({ id: 'teacher_t_' + name.toLowerCase().replace(/[^a-z]+/g, '_').replace(/^_|_$/g, ''), name }));
 
+    const TEACHER_START_RATING = 3;
     function addClassTeachersToRoster() {
         const teachers = GROUP_ID === 'teachers' ? TEACHERS_GROUP : (CLASS_TEACHERS[GROUP_ID] || []);
         let changed = false;
+        if (GROUP_ID === 'teachers') {
+            // "Abylaikhan agay" was removed from this list.
+            const before = playersData.length;
+            playersData = playersData.filter(p => !(String(p.name).trim() === 'Abylaikhan agay' && !p.goals && !p.assists && !p.mvp));
+            if (playersData.length !== before) changed = true;
+        }
         teachers.forEach(teacher => {
-            if (!playersData.some(p => String(p.id) === teacher.id || String(p.name).trim() === teacher.name)) {
-                playersData.push({ id: teacher.id, name: teacher.name, goals: 0, assists: 0, mvp: 0, logo: '' });
+            const existing = playersData.find(p => String(p.id) === teacher.id || String(p.name).trim() === teacher.name);
+            if (!existing) {
+                playersData.push({ id: teacher.id, name: teacher.name, rating: TEACHER_START_RATING, startRating: TEACHER_START_RATING, goals: 0, assists: 0, mvp: 0, logo: '' });
+                changed = true;
+            } else if (existing.startRating == null) {
+                // One-time: every teacher starts with rating 3.
+                existing.rating = TEACHER_START_RATING;
+                existing.startRating = TEACHER_START_RATING;
                 changed = true;
             }
         });
@@ -2462,6 +2479,11 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         draw();
     }
 
+    // Each grade gets its own badge color in the school leaderboard
+    function gradeHue(group) {
+        const g = parseInt(group, 10);
+        return Number.isFinite(g) ? ({ 7: 150, 8: 195, 9: 260, 10: 330, 11: 20 }[g] ?? 210) : 40;
+    }
     let schoolList = null, schoolMetric = 'goals';
     async function renderSchoolLeaderboard() {
         const box = document.getElementById('schoolBoard');
@@ -2499,7 +2521,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         const val = p => schoolMetric !== 'awards' ? `<span class="sb-val">${p[key]}</span>` :
             `<span class="sb-aw">${AWARD_DEFS.filter(d => p.aw[d.key]).map(d => `<span><img src="${awardImgSrc(d.key)}" alt="${esc(d.title)}" title="${esc(d.title)}">${p.aw[d.key]}</span>`).join('')}</span>`;
         box.innerHTML = `<div class="sb-tabs">${tabs.map(t => `<button class="sb-tab ${schoolMetric === t[0] ? 'active' : ''}" onclick="schoolMetric='${t[0]}';renderSchoolLeaderboard()">${t[1]}</button>`).join('')}</div>` +
-            (rows.length ? rows.map((p, i) => `<div class="sb-row"><span class="sb-rank">${i + 1}</span><span class="sb-name">${esc(p.name)}<span class="sb-class">${esc(p.group)}</span></span>${val(p)}</div>`).join('')
+            (rows.length ? rows.map((p, i) => `<div class="sb-row"><span class="sb-rank ${i < 3 ? 'r' + (i + 1) : ''}">${i + 1}</span><span class="sb-name">${esc(p.name)}<span class="sb-class" style="--h:${gradeHue(p.group)}">${esc(p.group)}</span></span>${val(p)}</div>`).join('')
                 : '<div class="sb-empty">No data yet. It appears after the first matches are played.</div>');
     }
     window.addEventListener('hashchange', () => location.reload());
@@ -2829,7 +2851,9 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
 
     function formatRating(value) {
         const n = Number(value);
-        return Number.isFinite(n) ? n.toFixed(3).replace(/0+$/, "").replace(/\.$/, "") : "0";
+        if (!Number.isFinite(n)) return "0.0";
+        let t = n.toFixed(3).replace(/0+$/, "");
+        return t.endsWith(".") ? t + "0" : t;
     }
 
     function avatarHtml(p) {
@@ -2841,10 +2865,11 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         container.innerHTML = '';
         [...playersData]
             .sort((a, b) => (Number(a.rating) || 0) - (Number(b.rating) || 0) || String(a.name || '').localeCompare(String(b.name || '')))
-            .forEach(p => {
+            .forEach((p, i) => {
             container.innerHTML += `
                 <div class="player-card" onclick="openPlayerModal(${p.id})">
                     <div class="player-info">
+                        <span class="player-num">${i + 1}</span>
                         <input type="checkbox" id="check_${p.id}" value="${p.id}" checked onclick="event.stopPropagation()" onchange="updateCount()">
                         ${avatarHtml(p)}
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -6677,6 +6702,9 @@ function syncAllGoalRows(saved) {
     }
 
     window.onload = async function() {
+        if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
         initTheme();
         buildLanding();
         const hashId = decodeURIComponent(location.hash.slice(1));
