@@ -971,7 +971,8 @@ body.no-group .admin-actions{justify-self:end}
 .pa-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--card-border);position:sticky;top:0;background:var(--card-bg);z-index:2}
 .pa-mark{width:42px;height:42px;object-fit:cover;border-radius:12px}.pa-head-main{flex:1;min-width:0}.pa-title{font-size:18px;font-weight:950}.pa-sub{font-size:11px;color:var(--text-sub);font-weight:700}.pa-close{border:0;background:var(--input-bg);color:var(--text-main);border-radius:10px;width:38px;height:38px;font-size:20px;cursor:pointer}
 .pa-body{padding:18px 20px 22px}.pa-login{max-width:420px;margin:20px auto;text-align:center}.pa-login img{width:76px;height:76px;border-radius:20px;object-fit:cover}.pa-login h2{font-size:22px;margin:12px 0 5px}.pa-login p{font-size:12px;color:var(--text-sub);margin-bottom:18px}.pa-input,.pa-select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main);font:inherit;font-size:14px;margin:6px 0 12px}.pa-btn{border:0;border-radius:11px;padding:11px 15px;background:var(--primary-blue);color:white;font:inherit;font-weight:900;cursor:pointer}.pa-btn:disabled{opacity:.5;cursor:not-allowed}.pa-btn.secondary{background:var(--input-bg);border:1px solid var(--card-border);color:var(--text-main)}.pa-btn.danger{background:#c53030}.pa-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}.pa-toolbar h2{font-size:19px;font-weight:950}.pa-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pa-card{border:1px solid var(--card-border);background:var(--card-bg);border-radius:16px;padding:15px;min-width:0}.pa-card h3{font-size:14px;font-weight:950;margin-bottom:8px}.pa-muted{font-size:11px;color:var(--text-sub);font-weight:700;line-height:1.5}.pa-classes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:12px 0}.pa-class{display:flex;align-items:center;gap:6px;border:1px solid var(--card-border);border-radius:9px;padding:8px 7px;font-size:12px;font-weight:900;background:var(--input-bg)}.pa-class input{accent-color:var(--primary-blue)}.pa-field-label{display:block;font-size:11px;font-weight:900;color:var(--text-sub);margin:10px 0 4px}.pa-identity-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:7px 0}.pa-identity-row b{font-size:12px}.pa-identity-row input{width:100%;padding:9px;border-radius:9px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}.pa-preview{background:var(--input-bg);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-top:12px;font-size:12px;line-height:1.65}.pa-list{display:grid;gap:8px;margin-top:10px}.pa-item{border:1px solid var(--card-border);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between}.pa-item-main{min-width:0;flex:1}.pa-item-title{font-size:13px;font-weight:950}.pa-item-sub{font-size:11px;color:var(--text-sub);font-weight:700;margin-top:3px}.pa-item-actions{display:flex;gap:6px;flex-wrap:wrap}.pa-item-actions .pa-btn{font-size:11px;padding:8px 10px}.pa-error{color:#e53e3e;font-size:12px;font-weight:800;margin-top:8px}.pa-success{color:#38a169;font-size:12px;font-weight:800;margin-top:8px}.pa-teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.pa-team{border:1px solid var(--card-border);border-radius:10px;padding:10px}.pa-team strong{display:block;margin-bottom:5px}.pa-team div{font-size:11px;color:var(--text-sub);line-height:1.5}
-body.no-group #mainAdminOpenBtn{display:inline-flex}
+#mainAdminOpenBtn{display:none!important}
+body.no-group #mainAdminOpenBtn{display:inline-flex!important}
 @media(max-width:650px){.pa-grid{grid-template-columns:1fr}.pa-classes{grid-template-columns:repeat(3,minmax(0,1fr))}.pa-body{padding:14px}.pa-head{padding:14px}}
 
 </style>
@@ -1679,7 +1680,7 @@ body.no-group #mainAdminOpenBtn{display:inline-flex}
 
         document.getElementById('pmName').textContent = p.name;
         document.getElementById('pmAwards').innerHTML = playerModalAwardsHtml(p);
-        { const av = document.getElementById('pmAvatar'); av.textContent = (String(p.name).trim().charAt(0) || '?');
+        { const av = document.getElementById('pmAvatar'); av.textContent = '';
         av.style.backgroundImage = p.avatar_url ? `url("${p.avatar_url}")` : ''; av.style.backgroundSize = 'cover'; av.style.backgroundPosition = 'center'; av.style.color = p.avatar_url ? 'transparent' : ''; }
         document.getElementById('pmRating').textContent = formatRating(p.rating);
 
@@ -1837,7 +1838,7 @@ body.no-group #mainAdminOpenBtn{display:inline-flex}
         g.addColorStop(0, col.g[0]); g.addColorStop(1, col.g[1]);
         x.fillStyle = g; x.beginPath(); x.arc(cx, ay, r, 0, Math.PI * 2); x.fill();
         x.fillStyle = '#fff'; x.font = SF('900', 44); x.textAlign = 'center'; x.textBaseline = 'middle';
-        x.fillText(String(p.name || '?').trim().charAt(0).toUpperCase(), cx, ay + 2);
+        // No first-letter avatar placeholder.
         const personalKeys = getPlayerPersonalAwards(p).filter(key => personalAwardImages[key]);
         x.font = SF('900', 36);
         const awardSize = 27, awardGap = 5;
@@ -2090,7 +2091,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     ag.addColorStop(0, '#4299e1'); ag.addColorStop(1, '#2b6cb0');
     x.fillStyle = ag; shareRR(x, avX, avY, av, av, 34); x.fill();
     x.fillStyle = '#fff'; x.font = SF('900', 62); x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.fillText(String(data.avatar || '?').toUpperCase(), avX + av / 2, avY + av / 2 + 2);
+    // No first-letter avatar placeholder.
 
     const tx = avX + av + 32, maxW = W - pad - 36 - tx;
     let nameSize = 58;
@@ -2789,8 +2790,9 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     }
 
     function avatarHtml(p) {
-        const letter = esc(String(p.name || '?').trim().charAt(0) || '?');
-        return p.avatar_url ? `<img class="pl-av" src="${esc(p.avatar_url)}" alt="" loading="lazy">` : `<div class="pl-av">${letter}</div>`;
+        return p.avatar_url
+            ? `<img class="pl-av" src="${esc(p.avatar_url)}" alt="" loading="lazy">`
+            : `<div class="pl-av" aria-hidden="true"></div>`;
     }
 
     function renderPlayers() {
@@ -6801,8 +6803,7 @@ async function paSetStatus(id,status){
 async function paDelete(id){
  if(!confirm('Delete this school competition?'))return;const {error}=await supabaseClient.from('school_competitions').delete().eq('id',id);if(error){alert('Could not delete: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();document.getElementById('paCompetitionDetails').textContent='Competition deleted.';
 }
-// If the user navigates between class and school views, keep the main admin entry available.
-window.addEventListener('load',()=>{const btn=document.getElementById('mainAdminOpenBtn');if(btn)btn.style.display='inline-flex';});
+// Main Admin entry is shown only on the home/class-selection screen via CSS.
 
 </script>
 
