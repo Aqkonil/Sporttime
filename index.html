@@ -965,19 +965,6 @@ body.no-group .hdr-center{display:block}
 body.no-group .admin-actions{justify-self:end}
 
 /* ===== School-wide Main Admin ===== */
-#platformAdminOverlay{display:none;position:fixed;inset:0;z-index:12000;background:#f4f6fa;padding:0;overflow:auto;align-items:stretch;justify-content:flex-start;isolation:isolate}
-#platformAdminOverlay.show{display:flex}
-.pa-dialog{width:min(1000px,100%);min-height:100vh;max-height:none;overflow:visible;background:#f4f6fa;color:var(--text-main);border:0;border-radius:0;box-shadow:none;margin:0 auto}
-.pa-head{display:flex;align-items:center;gap:12px;padding:18px clamp(16px,4vw,48px);border-bottom:1px solid var(--card-border);position:sticky;top:0;background:var(--card-bg);z-index:2}
-.pa-mark{width:42px;height:42px;object-fit:cover;border-radius:12px}.pa-head-main{flex:1;min-width:0}.pa-title{font-size:18px;font-weight:950}.pa-sub{font-size:11px;color:var(--text-sub);font-weight:700}.pa-close{border:0;background:var(--input-bg);color:var(--text-main);border-radius:10px;width:38px;height:38px;font-size:20px;cursor:pointer}
-.pa-body{width:100%;box-sizing:border-box;padding:20px clamp(16px,4vw,48px) 32px}.pa-login{max-width:420px;margin:20px auto;text-align:center}.pa-login img{width:76px;height:76px;border-radius:20px;object-fit:cover}.pa-login h2{font-size:22px;margin:12px 0 5px}.pa-login p{font-size:12px;color:var(--text-sub);margin-bottom:18px}.pa-input,.pa-select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main);font:inherit;font-size:14px;margin:6px 0 12px}.pa-btn{border:0;border-radius:11px;padding:11px 15px;background:var(--primary-blue);color:white;font:inherit;font-weight:900;cursor:pointer}.pa-btn:disabled{opacity:.5;cursor:not-allowed}.pa-btn.secondary{background:var(--input-bg);border:1px solid var(--card-border);color:var(--text-main)}.pa-btn.danger{background:#c53030}.pa-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}.pa-toolbar h2{font-size:19px;font-weight:950}.pa-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pa-card{border:1px solid var(--card-border);background:var(--card-bg);border-radius:16px;padding:15px;min-width:0}.pa-card h3{font-size:14px;font-weight:950;margin-bottom:8px}.pa-muted{font-size:11px;color:var(--text-sub);font-weight:700;line-height:1.5}.pa-classes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:12px 0}.pa-class{display:flex;align-items:center;gap:6px;border:1px solid var(--card-border);border-radius:9px;padding:8px 7px;font-size:12px;font-weight:900;background:var(--input-bg)}.pa-class input{accent-color:var(--primary-blue)}.pa-field-label{display:block;font-size:11px;font-weight:900;color:var(--text-sub);margin:10px 0 4px}.pa-identity-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:7px 0}.pa-identity-row b{font-size:12px}.pa-identity-row input{width:100%;padding:9px;border-radius:9px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}.pa-preview{background:var(--input-bg);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-top:12px;font-size:12px;line-height:1.65}.pa-list{display:grid;gap:8px;margin-top:10px}.pa-item{border:1px solid var(--card-border);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between}.pa-item-main{min-width:0;flex:1}.pa-item-title{font-size:13px;font-weight:950}.pa-item-sub{font-size:11px;color:var(--text-sub);font-weight:700;margin-top:3px}.pa-item-actions{display:flex;gap:6px;flex-wrap:wrap}.pa-item-actions .pa-btn{font-size:11px;padding:8px 10px}.pa-error{color:#e53e3e;font-size:12px;font-weight:800;margin-top:8px}.pa-success{color:#38a169;font-size:12px;font-weight:800;margin-top:8px}.pa-teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.pa-team{border:1px solid var(--card-border);border-radius:10px;padding:10px}.pa-team strong{display:block;margin-bottom:5px}.pa-team div{font-size:11px;color:var(--text-sub);line-height:1.5}
-.pa-welcome{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px;padding:18px;border:1px solid var(--card-border);border-radius:16px;background:var(--card-bg)}.pa-welcome h2{font-size:22px;font-weight:950;margin:4px 0}.pa-welcome p{margin:0;color:var(--text-sub);font-size:13px}.pa-eyebrow{font-size:10px;letter-spacing:1.2px;font-weight:950;color:var(--primary-blue)}.pa-guide{display:grid;gap:5px;margin-bottom:16px;padding:13px 16px;border-radius:12px;background:rgba(49,130,206,.09);border:1px solid var(--card-border);font-size:12px;line-height:1.5}.pa-guide span{color:var(--text-sub)}.pa-card>h3{font-size:16px!important;margin-bottom:6px!important}.pa-card .pa-muted{margin-bottom:8px}.pa-card .pa-field-label{font-size:12px;color:var(--text-main)}
-#mainAdminOpenBtn{display:none!important}
-body.no-group #mainAdminOpenBtn{display:inline-flex!important}
-body.pa-standalone{background:#f4f6fa!important;min-height:100vh}
-body.pa-standalone> :not(#platformAdminOverlay):not(script){display:none!important}
-body.pa-standalone #platformAdminOverlay{display:flex!important;background:#f4f6fa!important}
-body.pa-standalone .pa-dialog{background:#f4f6fa!important}
 @media(max-width:650px){.pa-grid{grid-template-columns:1fr}.pa-classes{grid-template-columns:repeat(3,minmax(0,1fr))}.pa-body{padding:14px}.pa-head{padding:14px}}
 
 </style>
@@ -987,7 +974,7 @@ body.pa-standalone .pa-dialog{background:#f4f6fa!important}
 
 <header>
     <a class="brand-link" href="#"><img class="hdr-logo" src="logo.webp" alt="BIL logo"><h1><span class="brand-pre">Aqtobe BIL </span><span class="brand-st">Sport Time</span></h1><span id="groupLabel" class="group-label"></span></a>
-    <div class="hdr-center">Sport Time</div><div class="admin-actions"><button class="admin-btn" id="mainAdminOpenBtn" onclick="openPlatformAdmin()" title="Main Admin">🔐</button><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
+    <div class="hdr-center">Sport Time</div><div class="admin-actions"><button class="admin-btn" id="changeGroupBtn" onclick="location.hash=''" title="Change class or group">🏫</button><span id="onlineStatus" style="font-size:11px;font-weight:900;color:var(--primary-green);">🔄 Connecting...</span><span id="accessStatus" style="font-size:11px;font-weight:900;color:var(--text-sub);">👁 View only</span><button class="admin-btn" id="adminAccessBtn" onclick="unlockAccess()">🔑</button><button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button></div>
 </header>
 
 <div id="landing" class="container"><div class="picker" id="groupPicker"></div>
@@ -2420,20 +2407,60 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     let APP_STATE_ID = 0, GROUP_ID = null, GROUP_NAME = '';
     const SCHOOL_GROUPS = [
         ...['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'].map((n, i) => ({ id: n, name: n, sort: i + 1, kind: 'class' })),
-        { id: 'tutors', name: 'Tutors', sort: 11, kind: 'staff' },
-        { id: 'teachers', name: 'Teachers', sort: 12, kind: 'staff' }
+        { id: 'tutors', name: 'Tutors', sort: 11, kind: 'staff' }
     ];
+
+    // Teachers are regular players in their own class rosters.
+    const CLASS_TEACHERS = {
+        '8A': [{ id: 'teacher_anuarbek_8a', name: 'Anuarbek agay' }],
+        '8B': [
+            { id: 'teacher_nurkhan_8b', name: 'Nurkhan agay' },
+            { id: 'teacher_qanat_8b', name: 'Qanat agay' }
+        ],
+        '9A': [{ id: 'teacher_yessenali_9a', name: 'Yessenali agay' }],
+        '9B': [{ id: 'teacher_nagashbek_9b', name: 'Nagashbek agay' }],
+        '10A': [{ id: 'teacher_abduluahid_10a', name: 'Abduluahid agay' }],
+        '10B': [{ id: 'teacher_serzhan_10b', name: 'Serzhan agay' }],
+        '11B': [
+            { id: 'teacher_rustem_11b', name: 'Rustem agay' },
+            { id: 'teacher_ramazan_11b', name: 'Ramazan agay' }
+        ]
+    };
+
+    const UNASSIGNED_TEACHERS = [
+        'T.Abylaikhan',
+        'K.Abylaikhan',
+        'Aimyrza agay',
+        'Yerkebulan agay'
+    ];
+
+    function addClassTeachersToRoster() {
+        const teachers = CLASS_TEACHERS[GROUP_ID] || [];
+        let changed = false;
+        teachers.forEach(teacher => {
+            if (!playersData.some(p => String(p.id) === teacher.id || String(p.name).trim() === teacher.name)) {
+                playersData.push({ id: teacher.id, name: teacher.name, goals: 0, assists: 0, mvp: 0, logo: '' });
+                changed = true;
+            }
+        });
+        return changed;
+    }
+
     function buildLanding() {
         const el = document.getElementById('groupPicker');
         let open = null;
         const go = (id, btn) => { btn.classList.add('chosen'); setTimeout(() => { location.hash = id; }, 300); };
+        let teachersOpen = false;
         const draw = () => {
             el.innerHTML =
                 `<div class="pk-row">${[7, 8, 9, 10, 11].map(g => `<button class="pk-pill ${open === g ? 'active' : ''}" data-grade="${g}" aria-label="Grade ${g}"><b>${g}</b><small>grade</small></button>`).join('')}</div>` +
                 (open ? `<div class="pk-row"><button class="pk-go" data-go="${open}A">${open}A</button><span class="pk-vs">VS</span><button class="pk-go" data-go="${open}B">${open}B</button></div>` : '') +
-                `<div class="pk-row">${SCHOOL_GROUPS.filter(g => g.kind !== 'class').map(g => `<button class="pk-staff" data-go="${g.id}">${g.id === 'tutors' ? '🎓' : '👨‍🏫'} ${g.name}</button>`).join('')}</div>`;
+                `<div class="pk-row"><button class="pk-staff" data-go="tutors">🎓 Tutors</button><button class="pk-staff" data-teachers="1">👨‍🏫 Teachers</button></div>` +
+                (teachersOpen ? `<div class="pk-row pk-teacher-list">${UNASSIGNED_TEACHERS.map(name => `<span class="pk-staff">${name}</span>`).join('')}</div>` : '');
             el.querySelectorAll('[data-grade]').forEach(b => b.onclick = () => { open = open === Number(b.dataset.grade) ? null : Number(b.dataset.grade); draw(); });
             el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go, b));
+            const teachersBtn = el.querySelector('[data-teachers]');
+            if (teachersBtn) teachersBtn.onclick = () => { teachersOpen = !teachersOpen; draw(); };
         };
         draw();
     }
@@ -2583,6 +2610,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
                 ? data.players
                 : JSON.parse(JSON.stringify(initialPlayers));
             const corrected11AName = normalize11APlayerNames(playersData);
+            const addedTeachers = addClassTeachersToRoster();
             activeTeams = Array.isArray(data.teams) ? data.teams : [];
             repairTeamLogos();
             activeMatches = Array.isArray(data.matches) ? data.matches : [];
@@ -2599,8 +2627,9 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
             });
 
             baseCycleRounds = activeTeams.length ? buildBaseCycleSchedule(activeTeams) : [];
-            if (corrected11AName) await saveData();
+            if (corrected11AName || addedTeachers) await saveData();
         } else {
+            addClassTeachersToRoster();
             await saveData();
         }
     }
@@ -6698,163 +6727,10 @@ function syncAllGoalRows(saved) {
     };
 
 
-// ================= SCHOOL-WIDE MAIN ADMIN / MIX / INTERCLASS =================
-const PLATFORM_ADMIN_EMAIL = 'admin@aqtobebil.app';
-let platformAdminSession = false;
-let platformAdminBusy = false;
-let platformAdminTab = null;
-let platformAdminCompetitions = [];
-let platformAdminRoster = {};
-const PA_CLASS_IDS = ['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'];
-
-function paEscape(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function paOverlay(){return document.getElementById('platformAdminOverlay');}
-async function openPlatformAdmin(){
-  // Open a tab synchronously from the click so the browser does not block it.
-  if(platformAdminBusy) return;
-  if(platformAdminSession){ renderPlatformAdmin(); return; }
-  platformAdminTab = window.open('about:blank', 'AqtobeBILMainAdmin');
-  const password = await askAdminPassword();
-  if(password === null){ if(platformAdminTab && !platformAdminTab.closed) platformAdminTab.close(); platformAdminTab=null; return; }
-  if(!password){ if(platformAdminTab && !platformAdminTab.closed) platformAdminTab.close(); platformAdminTab=null; alert('Please enter the Main Admin password.'); return; }
-  await platformAdminLogin(password);
-}
-function closePlatformAdmin(){
- const ov=paOverlay();if(ov)ov.classList.remove('show');
- if(new URLSearchParams(location.search).get('mainAdmin')==='1') window.close();
-}
-// Keep the header button connected to the Main Admin login function.
-window.openPlatformAdmin = openPlatformAdmin;
-async function platformAdminLogin(password){
- if(platformAdminBusy)return; platformAdminBusy=true;
- try{
-  // Supabase Auth has one active session per browser. This sign-in replaces any class-admin session.
-  await supabaseClient.auth.signOut();
-  const {data,error}=await supabaseClient.auth.signInWithPassword({email:PLATFORM_ADMIN_EMAIL,password});
-  if(error||!data?.user){alert('Incorrect Main Admin password or sign-in failed.');return;}
-  const {data:row,error:checkError}=await supabaseClient.from('platform_admins').select('user_id').eq('user_id',data.user.id).maybeSingle();
-  if(checkError||!row){await supabaseClient.auth.signOut();alert('This account is not registered as a Main Admin. Add its user ID to public.platform_admins.');return;}
-  platformAdminSession=true; await loadPlatformAdminCompetitions();
-  if(platformAdminTab && !platformAdminTab.closed){
-    const adminUrl=new URL(location.href);adminUrl.searchParams.set('mainAdmin','1');
-    platformAdminTab.location.href=adminUrl.toString();platformAdminTab=null;
-  }else{renderPlatformAdmin();}
- }catch(e){console.error(e);alert('Could not connect to the database. Check the SQL setup.');}
- finally{platformAdminBusy=false;}
-}
-async function platformAdminLogout(){platformAdminSession=false;platformAdminCompetitions=[];await supabaseClient.auth.signOut();closePlatformAdmin();}
-async function loadPlatformAdminCompetitions(){
- const {data,error}=await supabaseClient.from('school_competitions').select('*').order('created_at',{ascending:false});
- if(error){console.error(error);throw error;} platformAdminCompetitions=data||[];
-}
-function renderPlatformAdmin(){
- const overlay = paOverlay();
- if (overlay) overlay.classList.add('show');
- const body=document.getElementById('platformAdminBody');if(!body)return;
- body.innerHTML=`<div class="pa-welcome"><div><div class="pa-eyebrow">AQTOBE BIL · SPORT TIME</div><h2>🔐 Main Admin Dashboard</h2><p>Manage school-wide competitions for grades 7–11 from one place.</p></div><button class="pa-btn secondary" onclick="platformAdminLogout()">Sign out</button></div>
- <div class="pa-guide"><b>Quick guide</b><span>Create a tournament, choose classes and format, then open it to manage teams, matches and scores.</span></div>
- <div class="pa-grid"><section class="pa-card"><h3>➕ Create tournament</h3><p class="pa-muted">Set the name, format and participating classes.</p><label class="pa-field-label">1. Competition name</label><input class="pa-input" id="paName" placeholder="Example: BIL Football Cup" maxlength="80">
- <label class="pa-field-label">2. Competition format</label><select class="pa-select" id="paType" onchange="paTypeChanged()"><option value="mix">Mix — players from selected classes are shuffled into teams</option><option value="interclass">Inter-class — each selected class is one team</option></select>
- <label class="pa-field-label">3. Select participating classes</label><div class="pa-classes">${PA_CLASS_IDS.map(c=>`<label class="pa-class"><input type="checkbox" value="${c}" class="paClassCheck" onchange="paSelectionChanged()">${c}</label>`).join('')}</div>
- <div id="paTypeFields"></div><button class="pa-btn" id="paCreateBtn" onclick="createSchoolCompetition()" style="width:100%;margin-top:12px">Create competition</button><div id="paCreateMessage"></div></section>
- <section class="pa-card"><h3>📋 Tournaments</h3><p class="pa-muted">View and control tournaments you created.</p><div id="paCompetitionList" class="pa-list"></div></section></div>
- <section class="pa-card" style="margin-top:14px"><h3>📊 Tournament details</h3><div id="paCompetitionDetails" class="pa-muted">Select <b>Open</b> in the list to manage teams, fixtures, scores and standings.</div></section>`;
- paTypeChanged();renderPlatformAdminList();
-}
-function paSelectedClasses(){return [...document.querySelectorAll('.paClassCheck:checked')].map(x=>x.value);}
-function paTypeChanged(){
- const type=document.getElementById('paType')?.value,box=document.getElementById('paTypeFields');if(!box)return;
- if(type==='mix')box.innerHTML=`<label class="pa-field-label">Number of mixed teams</label><select class="pa-select" id="paTeamCount"><option value="2">2 teams</option><option value="3">3 teams</option><option value="4">4 teams</option><option value="5">5 teams</option><option value="6">6 teams</option></select><div class="pa-muted">Players are loaded from the selected classes and shuffled into balanced-size teams. No class roster is modified.</div>`;
- else box.innerHTML=`<label class="pa-field-label">Team identity</label><select class="pa-select" id="paIdentityType"><option value="country">Countries</option><option value="club">Football clubs</option></select><div class="pa-muted">After selecting classes, enter a country or club for each class. The team name remains the class name.</div><div id="paIdentityInputs"></div>`;
- paSelectionChanged();
-}
-function paSelectionChanged(){
- const box=document.getElementById('paIdentityInputs');if(!box)return;
- const chosen=paSelectedClasses();box.innerHTML=chosen.map(c=>`<div class="pa-identity-row"><b>${c}</b><input class="paIdentityInput" data-class="${c}" placeholder="${document.getElementById('paIdentityType')?.value==='club'?'Club name':'Country name'}"></div>`).join('')||'<div class="pa-muted">Choose at least one class.</div>';
-}
-async function paFetchRosters(classes){
- const {data,error}=await supabaseClient.from('tournament_state').select('group_id, players').in('group_id',classes);
- if(error)throw error;const map={};(data||[]).forEach(r=>{map[r.group_id]=Array.isArray(r.players)?r.players:[];});return map;
-}
-function paShuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
-function paRoundRobin(teams){const list=teams.map(t=>t.name);if(list.length<2)return[];const arr=[...list];if(arr.length%2)arr.push(null);const rounds=[];for(let r=0;r<arr.length-1;r++){const games=[];for(let i=0;i<arr.length/2;i++){const a=arr[i],b=arr[arr.length-1-i];if(a&&b)games.push({home:a,away:b,home_score:null,away_score:null,played:false});}rounds.push(games);arr.splice(1,0,arr.pop());}return rounds;}
-async function createSchoolCompetition(){
- if(!platformAdminSession)return;const msg=document.getElementById('paCreateMessage');const name=document.getElementById('paName').value.trim();const type=document.getElementById('paType').value;const classes=paSelectedClasses();
- if(!name){msg.innerHTML='<div class="pa-error">Enter a competition name.</div>';return;}if(!classes.length){msg.innerHTML='<div class="pa-error">Select at least one class.</div>';return;}
- if(type==='interclass'&&classes.length<2){msg.innerHTML='<div class="pa-error">Inter-class tournaments need at least two classes.</div>';return;}
- const btn=document.getElementById('paCreateBtn');btn.disabled=true;btn.textContent='Loading players…';
- try{
-  const rosters=await paFetchRosters(classes);const teams=[];let matches=[];let teamConfig={};
-  if(type==='mix'){
-   const all=classes.flatMap(c=>(rosters[c]||[]).map(p=>({id:p.id,name:p.name,rating:Number(p.rating)||0,sourceClass:c})));
-   if(all.length<2)throw new Error('The selected classes do not have enough saved players yet.');
-   const count=Math.min(Number(document.getElementById('paTeamCount').value)||2,all.length);const shuffled=paShuffle(all);const buckets=Array.from({length:count},(_,i)=>({name:`Team ${i+1}`,players:[]}));
-   // snake draft after shuffle gives a more even headcount while keeping random assignment
-   shuffled.forEach((p,i)=>{const cycle=Math.floor(i/count),pos=i%count;const idx=cycle%2===0?pos:count-1-pos;buckets[idx].players.push(p);});
-   teams.push(...buckets);matches=paRoundRobin(buckets);teamConfig={mode:'random_mix',teams,player_count:all.length};
-  }else{
-   const identityType=document.getElementById('paIdentityType').value;const identities={};document.querySelectorAll('.paIdentityInput').forEach(i=>identities[i.dataset.class]=i.value.trim());
-   if(classes.some(c=>!identities[c]))throw new Error('Enter a country or club identity for every selected class.');
-   classes.forEach(c=>teams.push({name:c,identity_type:identityType,identity:identities[c],players:(rosters[c]||[]).map(p=>({id:p.id,name:p.name,rating:Number(p.rating)||0}))}));
-   matches=paRoundRobin(teams);teamConfig={mode:'interclass',identity_type:identityType,teams};
-  }
-  const payload={name,competition_type:type,status:'draft',class_ids:classes,team_config:teamConfig,matches,standings:{},settings:{created_from:'main_admin'},created_by:(await supabaseClient.auth.getUser()).data.user.id};
-  const {data,error}=await supabaseClient.from('school_competitions').insert(payload).select('*').single();if(error)throw error;
-  await loadPlatformAdminCompetitions();renderPlatformAdmin();showPaDetails(data.id);
- }catch(e){console.error(e);msg.innerHTML=`<div class="pa-error">${paEscape(e.message||'Could not create competition.')}</div>`;}
- finally{btn.disabled=false;btn.textContent='Create competition';}
-}
-function renderPlatformAdminList(){
- const box=document.getElementById('paCompetitionList');if(!box)return;
- box.innerHTML=platformAdminCompetitions.length?platformAdminCompetitions.map(c=>`<div class="pa-item"><div class="pa-item-main"><div class="pa-item-title">${paEscape(c.name)}</div><div class="pa-item-sub">${c.competition_type==='mix'?'Mix':'Inter-class'} · ${(c.class_ids||[]).join(', ')} · ${paEscape(c.status)}</div></div><div class="pa-item-actions"><button class="pa-btn secondary" onclick="showPaDetails('${c.id}')">Open</button><button class="pa-btn secondary" onclick="paSetStatus('${c.id}','active')">Start</button><button class="pa-btn secondary" onclick="paSetStatus('${c.id}','completed')">Finish</button><button class="pa-btn danger" onclick="paDelete('${c.id}')">Delete</button></div></div>`).join(''):'<div class="pa-muted" style="padding:14px 0">No school competitions yet.</div>';
-}
-function paStandings(c){
- const names=(c.team_config?.teams||[]).map(t=>t.name);const table={};names.forEach(n=>table[n]={name:n,played:0,wins:0,draws:0,losses:0,gf:0,ga:0,pts:0});
- (c.matches||[]).forEach(round=>(round||[]).forEach(m=>{if(!m.played||m.home_score==null||m.away_score==null)return;const h=table[m.home],a=table[m.away];if(!h||!a)return;const hs=Number(m.home_score),as=Number(m.away_score);h.played++;a.played++;h.gf+=hs;h.ga+=as;a.gf+=as;a.ga+=hs;if(hs>as){h.wins++;h.pts+=3;a.losses++;}else if(as>hs){a.wins++;a.pts+=3;h.losses++;}else{h.draws++;a.draws++;h.pts++;a.pts++;}}));
- return Object.values(table).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf);
-}
-function showPaDetails(id){
- const c=platformAdminCompetitions.find(x=>String(x.id)===String(id));const box=document.getElementById('paCompetitionDetails');if(!c||!box)return;
- const teams=c.team_config?.teams||[];const isMix=c.competition_type==='mix';
- const fixtures=(c.matches||[]).map((round,ri)=>`<div class="pa-preview"><b>Round ${ri+1}</b>${(round||[]).map((m,mi)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--card-border);padding-top:8px;margin-top:8px"><span><b>${paEscape(m.home)}</b> vs <b>${paEscape(m.away)}</b></span><span style="display:flex;align-items:center;gap:5px"><input id="paScore-${ri}-${mi}-h" type="number" min="0" max="99" value="${m.home_score??''}" style="width:48px;padding:7px;border:1px solid var(--card-border);border-radius:7px;background:var(--card-bg);color:var(--text-main)"><b>:</b><input id="paScore-${ri}-${mi}-a" type="number" min="0" max="99" value="${m.away_score??''}" style="width:48px;padding:7px;border:1px solid var(--card-border);border-radius:7px;background:var(--card-bg);color:var(--text-main)"><button class="pa-btn secondary" onclick="paSaveScore('${c.id}',${ri},${mi})">Save score</button></span></div>`).join('')}</div>`).join('');
- const standings=paStandings(c);
- box.innerHTML=`<div class="pa-toolbar"><div><div class="pa-item-title">${paEscape(c.name)}</div><div class="pa-item-sub">${paEscape(c.status)} · ${(c.class_ids||[]).join(', ')}</div></div><span class="pa-muted">${isMix?'Random mixed teams':'Class teams'}</span></div><div class="pa-teams">${teams.map(t=>`<div class="pa-team"><strong>${paEscape(t.name)}${t.identity?' · '+paEscape(t.identity):''}</strong><div>${(t.players||[]).map(p=>`${paEscape(p.name)}${p.sourceClass?' ('+paEscape(p.sourceClass)+')':''}`).join('<br>')||'No players saved'}</div></div>`).join('')}</div>${fixtures?`<h3 style="margin-top:16px">Fixtures & scores</h3>${fixtures}`:'<div class="pa-muted" style="margin-top:12px">No fixtures available.</div>'}<h3 style="margin-top:16px">Standings</h3><div class="pa-preview"><table style="width:100%;border-collapse:collapse;text-align:center;font-size:11px"><thead><tr><th style="text-align:left">Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>Pts</th></tr></thead><tbody>${standings.map(t=>`<tr><td style="text-align:left;padding:5px 2px">${paEscape(t.name)}</td><td>${t.played}</td><td>${t.wins}</td><td>${t.draws}</td><td>${t.losses}</td><td>${t.gf}</td><td>${t.ga}</td><td><b>${t.pts}</b></td></tr>`).join('')}</tbody></table></div>`;
-}
-async function paSaveScore(id,roundIndex,matchIndex){
- const c=platformAdminCompetitions.find(x=>String(x.id)===String(id));if(!c)return;const hs=document.getElementById(`paScore-${roundIndex}-${matchIndex}-h`),as=document.getElementById(`paScore-${roundIndex}-${matchIndex}-a`);if(!hs||!as||hs.value===''||as.value===''){alert('Enter both scores.');return;}
- const h=Number(hs.value),a=Number(as.value);if(!Number.isInteger(h)||!Number.isInteger(a)||h<0||a<0||h>99||a>99){alert('Scores must be whole numbers from 0 to 99.');return;}
- const matches=JSON.parse(JSON.stringify(c.matches||[]));const match=matches[roundIndex]?.[matchIndex];if(!match)return;match.home_score=h;match.away_score=a;match.played=true;
- const {error}=await supabaseClient.from('school_competitions').update({matches}).eq('id',id);if(error){alert('Could not save score: '+error.message);return;}await loadPlatformAdminCompetitions();showPaDetails(id);
-}
-async function paSetStatus(id,status){
- const {error}=await supabaseClient.from('school_competitions').update({status}).eq('id',id);if(error){alert('Could not update status: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();showPaDetails(id);
-}
-async function paDelete(id){
- if(!confirm('Delete this school competition?'))return;const {error}=await supabaseClient.from('school_competitions').delete().eq('id',id);if(error){alert('Could not delete: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();document.getElementById('paCompetitionDetails').textContent='Competition deleted.';
-}
-// In the separate Main Admin tab, reuse the authenticated Supabase session and open the dashboard.
-window.addEventListener('load', async () => {
- if(new URLSearchParams(location.search).get('mainAdmin')!=='1') return;
- document.body.classList.add('pa-standalone');
- try{
-  const {data:{session}}=await supabaseClient.auth.getSession();
-  if(!session){alert('Main Admin session expired. Please sign in again from the main page.');return;}
-  const {data:row,error}=await supabaseClient.from('platform_admins').select('user_id').eq('user_id',session.user.id).maybeSingle();
-  if(error||!row){alert('This account is not registered as a Main Admin.');return;}
-  platformAdminSession=true;await loadPlatformAdminCompetitions();renderPlatformAdmin();
- }catch(e){console.error(e);alert('Could not open Main Admin dashboard: '+(e.message||'unknown error'));}
-});
-
-// Main Admin entry is shown only on the home/class-selection screen via CSS.
+// Main Admin feature removed.
 
 </script>
 
-<div id="platformAdminOverlay" onclick="if(event.target===this)closePlatformAdmin()">
- <section class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="paDialogTitle">
-  <header class="pa-head"><img class="pa-mark" src="logo.webp" alt="BIL"><div class="pa-head-main"><div class="pa-title" id="paDialogTitle">🔐 Admin</div><div class="pa-sub">School-wide administration</div></div><button class="pa-close" onclick="closePlatformAdmin()" aria-label="Close">×</button></header>
-  <div class="pa-body" id="platformAdminBody"></div>
- </section>
-</div>
 <div id="pwOverlay" class="pw-overlay">
     <div class="pw-box">
         <div class="dlg-icon t-info">🔑</div>
