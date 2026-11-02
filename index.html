@@ -971,6 +971,7 @@ body.no-group .admin-actions{justify-self:end}
 .pa-head{display:flex;align-items:center;gap:12px;padding:18px clamp(16px,4vw,48px);border-bottom:1px solid var(--card-border);position:sticky;top:0;background:var(--card-bg);z-index:2}
 .pa-mark{width:42px;height:42px;object-fit:cover;border-radius:12px}.pa-head-main{flex:1;min-width:0}.pa-title{font-size:18px;font-weight:950}.pa-sub{font-size:11px;color:var(--text-sub);font-weight:700}.pa-close{border:0;background:var(--input-bg);color:var(--text-main);border-radius:10px;width:38px;height:38px;font-size:20px;cursor:pointer}
 .pa-body{width:100%;box-sizing:border-box;padding:20px clamp(16px,4vw,48px) 32px}.pa-login{max-width:420px;margin:20px auto;text-align:center}.pa-login img{width:76px;height:76px;border-radius:20px;object-fit:cover}.pa-login h2{font-size:22px;margin:12px 0 5px}.pa-login p{font-size:12px;color:var(--text-sub);margin-bottom:18px}.pa-input,.pa-select{width:100%;padding:12px;border-radius:11px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main);font:inherit;font-size:14px;margin:6px 0 12px}.pa-btn{border:0;border-radius:11px;padding:11px 15px;background:var(--primary-blue);color:white;font:inherit;font-weight:900;cursor:pointer}.pa-btn:disabled{opacity:.5;cursor:not-allowed}.pa-btn.secondary{background:var(--input-bg);border:1px solid var(--card-border);color:var(--text-main)}.pa-btn.danger{background:#c53030}.pa-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}.pa-toolbar h2{font-size:19px;font-weight:950}.pa-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pa-card{border:1px solid var(--card-border);background:var(--card-bg);border-radius:16px;padding:15px;min-width:0}.pa-card h3{font-size:14px;font-weight:950;margin-bottom:8px}.pa-muted{font-size:11px;color:var(--text-sub);font-weight:700;line-height:1.5}.pa-classes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:12px 0}.pa-class{display:flex;align-items:center;gap:6px;border:1px solid var(--card-border);border-radius:9px;padding:8px 7px;font-size:12px;font-weight:900;background:var(--input-bg)}.pa-class input{accent-color:var(--primary-blue)}.pa-field-label{display:block;font-size:11px;font-weight:900;color:var(--text-sub);margin:10px 0 4px}.pa-identity-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:7px 0}.pa-identity-row b{font-size:12px}.pa-identity-row input{width:100%;padding:9px;border-radius:9px;border:1px solid var(--card-border);background:var(--input-bg);color:var(--text-main)}.pa-preview{background:var(--input-bg);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-top:12px;font-size:12px;line-height:1.65}.pa-list{display:grid;gap:8px;margin-top:10px}.pa-item{border:1px solid var(--card-border);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;justify-content:space-between}.pa-item-main{min-width:0;flex:1}.pa-item-title{font-size:13px;font-weight:950}.pa-item-sub{font-size:11px;color:var(--text-sub);font-weight:700;margin-top:3px}.pa-item-actions{display:flex;gap:6px;flex-wrap:wrap}.pa-item-actions .pa-btn{font-size:11px;padding:8px 10px}.pa-error{color:#e53e3e;font-size:12px;font-weight:800;margin-top:8px}.pa-success{color:#38a169;font-size:12px;font-weight:800;margin-top:8px}.pa-teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.pa-team{border:1px solid var(--card-border);border-radius:10px;padding:10px}.pa-team strong{display:block;margin-bottom:5px}.pa-team div{font-size:11px;color:var(--text-sub);line-height:1.5}
+.pa-welcome{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px;padding:18px;border:1px solid var(--card-border);border-radius:16px;background:var(--card-bg)}.pa-welcome h2{font-size:22px;font-weight:950;margin:4px 0}.pa-welcome p{margin:0;color:var(--text-sub);font-size:13px}.pa-eyebrow{font-size:10px;letter-spacing:1.2px;font-weight:950;color:var(--primary-blue)}.pa-guide{display:grid;gap:5px;margin-bottom:16px;padding:13px 16px;border-radius:12px;background:rgba(49,130,206,.09);border:1px solid var(--card-border);font-size:12px;line-height:1.5}.pa-guide span{color:var(--text-sub)}.pa-card>h3{font-size:16px!important;margin-bottom:6px!important}.pa-card .pa-muted{margin-bottom:8px}.pa-card .pa-field-label{font-size:12px;color:var(--text-main)}
 #mainAdminOpenBtn{display:none!important}
 body.no-group #mainAdminOpenBtn{display:inline-flex!important}
 @media(max-width:650px){.pa-grid{grid-template-columns:1fr}.pa-classes{grid-template-columns:repeat(3,minmax(0,1fr))}.pa-body{padding:14px}.pa-head{padding:14px}}
@@ -6697,6 +6698,7 @@ function syncAllGoalRows(saved) {
 const PLATFORM_ADMIN_EMAIL = 'admin@aqtobebil.app';
 let platformAdminSession = false;
 let platformAdminBusy = false;
+let platformAdminTab = null;
 let platformAdminCompetitions = [];
 let platformAdminRoster = {};
 const PA_CLASS_IDS = ['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'];
@@ -6704,15 +6706,19 @@ const PA_CLASS_IDS = ['7A','7B','8A','8B','9A','9B','10A','10B','11A','11B'];
 function paEscape(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function paOverlay(){return document.getElementById('platformAdminOverlay');}
 async function openPlatformAdmin(){
-  // Prevent double-clicks and make the login flow explicit.
+  // Open a tab synchronously from the click so the browser does not block it.
   if(platformAdminBusy) return;
   if(platformAdminSession){ renderPlatformAdmin(); return; }
+  platformAdminTab = window.open('about:blank', 'AqtobeBILMainAdmin');
   const password = await askAdminPassword();
-  if(password === null) return;
-  if(!password){ alert('Please enter the Main Admin password.'); return; }
+  if(password === null){ if(platformAdminTab && !platformAdminTab.closed) platformAdminTab.close(); platformAdminTab=null; return; }
+  if(!password){ if(platformAdminTab && !platformAdminTab.closed) platformAdminTab.close(); platformAdminTab=null; alert('Please enter the Main Admin password.'); return; }
   await platformAdminLogin(password);
 }
-function closePlatformAdmin(){const ov=paOverlay();if(ov)ov.classList.remove('show');}
+function closePlatformAdmin(){
+ const ov=paOverlay();if(ov)ov.classList.remove('show');
+ if(new URLSearchParams(location.search).get('mainAdmin')==='1') window.close();
+}
 // Keep the header button connected to the Main Admin login function.
 window.openPlatformAdmin = openPlatformAdmin;
 async function platformAdminLogin(password){
@@ -6724,7 +6730,11 @@ async function platformAdminLogin(password){
   if(error||!data?.user){alert('Incorrect Main Admin password or sign-in failed.');return;}
   const {data:row,error:checkError}=await supabaseClient.from('platform_admins').select('user_id').eq('user_id',data.user.id).maybeSingle();
   if(checkError||!row){await supabaseClient.auth.signOut();alert('This account is not registered as a Main Admin. Add its user ID to public.platform_admins.');return;}
-  platformAdminSession=true; await loadPlatformAdminCompetitions(); renderPlatformAdmin();
+  platformAdminSession=true; await loadPlatformAdminCompetitions();
+  if(platformAdminTab && !platformAdminTab.closed){
+    const adminUrl=new URL(location.href);adminUrl.searchParams.set('mainAdmin','1');
+    platformAdminTab.location.href=adminUrl.toString();platformAdminTab=null;
+  }else{renderPlatformAdmin();}
  }catch(e){console.error(e);alert('Could not connect to the database. Check the SQL setup.');}
  finally{platformAdminBusy=false;}
 }
@@ -6737,13 +6747,14 @@ function renderPlatformAdmin(){
  const overlay = paOverlay();
  if (overlay) overlay.classList.add('show');
  const body=document.getElementById('platformAdminBody');if(!body)return;
- body.innerHTML=`<div class="section-header" style="margin-top:0"><span class="section-title">🔐 Admin</span><button class="btn btn-dark" style="width:auto;margin:0" onclick="platformAdminLogout()">Sign out</button></div><div class="rules-admin-note" style="margin:0 0 14px">School-wide competitions and Mix mode for grades 7–11.</div>
- <div class="pa-grid"><section class="admin-add-card" style="padding:18px"><h3 class="rules-admin-title">Create competition</h3><label class="pa-field-label">Competition name</label><input class="pa-input" id="paName" placeholder="e.g. BIL Football Cup" maxlength="80">
- <label class="pa-field-label">Competition format</label><select class="pa-select" id="paType" onchange="paTypeChanged()"><option value="mix">Mix — random mixed teams</option><option value="interclass">Inter-class — class vs class</option></select>
- <label class="pa-field-label">Select classes</label><div class="pa-classes">${PA_CLASS_IDS.map(c=>`<label class="pa-class"><input type="checkbox" value="${c}" class="paClassCheck" onchange="paSelectionChanged()">${c}</label>`).join('')}</div>
- <div id="paTypeFields"></div><button class="btn btn-green" id="paCreateBtn" onclick="createSchoolCompetition()" style="width:100%;margin-top:12px">Create competition</button><div id="paCreateMessage"></div></section>
- <section class="admin-add-card" style="padding:18px"><h3 class="rules-admin-title">Existing competitions</h3><div class="pa-muted">Saved separately from each class's existing tournament data.</div><div id="paCompetitionList" class="pa-list"></div></section></div>
- <section class="admin-add-card" style="padding:18px;margin-top:14px"><h3 class="rules-admin-title">Competition details</h3><div id="paCompetitionDetails" class="pa-muted">Select a competition from the list to view its teams, fixtures and roster.</div></section>`;
+ body.innerHTML=`<div class="pa-welcome"><div><div class="pa-eyebrow">AQTOBE BIL · SPORT TIME</div><h2>🔐 Main Admin Dashboard</h2><p>Manage school-wide competitions for grades 7–11 from one place.</p></div><button class="pa-btn secondary" onclick="platformAdminLogout()">Sign out</button></div>
+ <div class="pa-guide"><b>How to use this page</b><span>1. Create a competition → 2. Choose classes and format → 3. Create teams and fixtures → 4. Open a competition to enter scores.</span></div>
+ <div class="pa-grid"><section class="pa-card"><h3>➕ Create a new competition</h3><p class="pa-muted">Start by giving the competition a name and choosing its format.</p><label class="pa-field-label">1. Competition name</label><input class="pa-input" id="paName" placeholder="Example: BIL Football Cup" maxlength="80">
+ <label class="pa-field-label">2. Competition format</label><select class="pa-select" id="paType" onchange="paTypeChanged()"><option value="mix">Mix — players from selected classes are shuffled into teams</option><option value="interclass">Inter-class — each selected class is one team</option></select>
+ <label class="pa-field-label">3. Select participating classes</label><div class="pa-classes">${PA_CLASS_IDS.map(c=>`<label class="pa-class"><input type="checkbox" value="${c}" class="paClassCheck" onchange="paSelectionChanged()">${c}</label>`).join('')}</div>
+ <div id="paTypeFields"></div><button class="pa-btn" id="paCreateBtn" onclick="createSchoolCompetition()" style="width:100%;margin-top:12px">Create competition</button><div id="paCreateMessage"></div></section>
+ <section class="pa-card"><h3>📋 Your competitions</h3><p class="pa-muted">Open a competition to see its teams, match schedule, results and standings.</p><div id="paCompetitionList" class="pa-list"></div></section></div>
+ <section class="pa-card" style="margin-top:14px"><h3>📊 Competition overview</h3><div id="paCompetitionDetails" class="pa-muted">Choose <b>Open</b> on a competition to view teams, fixtures, enter match scores and check the standings.</div></section>`;
  paTypeChanged();renderPlatformAdminList();
 }
 function paSelectedClasses(){return [...document.querySelectorAll('.paClassCheck:checked')].map(x=>x.value);}
@@ -6817,6 +6828,18 @@ async function paSetStatus(id,status){
 async function paDelete(id){
  if(!confirm('Delete this school competition?'))return;const {error}=await supabaseClient.from('school_competitions').delete().eq('id',id);if(error){alert('Could not delete: '+error.message);return;}await loadPlatformAdminCompetitions();renderPlatformAdminList();document.getElementById('paCompetitionDetails').textContent='Competition deleted.';
 }
+// In the separate Main Admin tab, reuse the authenticated Supabase session and open the dashboard.
+window.addEventListener('load', async () => {
+ if(new URLSearchParams(location.search).get('mainAdmin')!=='1') return;
+ try{
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(!session){alert('Main Admin session expired. Please sign in again from the main page.');return;}
+  const {data:row,error}=await supabaseClient.from('platform_admins').select('user_id').eq('user_id',session.user.id).maybeSingle();
+  if(error||!row){alert('This account is not registered as a Main Admin.');return;}
+  platformAdminSession=true;await loadPlatformAdminCompetitions();renderPlatformAdmin();
+ }catch(e){console.error(e);alert('Could not open Main Admin dashboard: '+(e.message||'unknown error'));}
+});
+
 // Main Admin entry is shown only on the home/class-selection screen via CSS.
 
 </script>
