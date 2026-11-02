@@ -1680,8 +1680,6 @@ body.no-group #mainAdminOpenBtn{display:inline-flex!important}
 
         document.getElementById('pmName').textContent = p.name;
         document.getElementById('pmAwards').innerHTML = playerModalAwardsHtml(p);
-        { const av = document.getElementById('pmAvatar'); av.textContent = '';
-        av.style.backgroundImage = p.avatar_url ? `url("${p.avatar_url}")` : ''; av.style.backgroundSize = 'cover'; av.style.backgroundPosition = 'center'; av.style.color = p.avatar_url ? 'transparent' : ''; }
         document.getElementById('pmRating').textContent = formatRating(p.rating);
 
         const g = document.getElementById('pmGrowth');
@@ -2790,9 +2788,7 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     }
 
     function avatarHtml(p) {
-        return p.avatar_url
-            ? `<img class="pl-av" src="${esc(p.avatar_url)}" alt="" loading="lazy">`
-            : `<div class="pl-av" aria-hidden="true"></div>`;
+        return '';
     }
 
     function renderPlayers() {
@@ -6849,7 +6845,6 @@ async function paDelete(id){
     <div class="dlg-card pm-card" role="dialog" aria-modal="true">
         <button type="button" class="pm-close" onclick="closePlayerModal()" aria-label="Close">✕</button>
         <div class="pm-head">
-            <div class="pm-avatar" id="pmAvatar"></div>
             <div class="pm-head-text">
                 <div class="pm-name-row"><div class="pm-name" id="pmName"></div><div class="pm-awards" id="pmAwards" aria-label="Personal awards"></div></div>
             </div>
