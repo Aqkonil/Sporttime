@@ -945,16 +945,19 @@ body.no-group .brand-st{display:none}
 .sb-tab.active{background:rgba(49,130,206,.15);border-color:var(--primary-blue);color:var(--primary-blue)}
 .sb-row{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--card-border)}
 .sb-row:last-child{border-bottom:none}
-.sb-rank{width:28px;height:28px;line-height:28px;flex:0 0 auto;border-radius:50%;text-align:center;font-weight:900;color:var(--text-sub)}
-.sb-rank.r1{background:linear-gradient(135deg,#f6d365,#e0a800);color:#5c4300}
-.sb-rank.r2{background:linear-gradient(135deg,#e2e8f0,#a0aec0);color:#2d3748}
-.sb-rank.r3{background:linear-gradient(135deg,#f0b27a,#b9733a);color:#4a2a0c}
+.sb-rank{width:28px;height:28px;line-height:26px;flex:0 0 auto;border-radius:50%;text-align:center;font-weight:900;font-size:14px;color:var(--text-sub);border:1px solid var(--card-border)}
+.sb-rank.r1{background:rgba(214,158,46,.14);border-color:rgba(214,158,46,.45);color:#a97c0e}
+.sb-rank.r2{background:rgba(113,128,150,.12);border-color:rgba(113,128,150,.35);color:#718096}
+.sb-rank.r3{background:rgba(192,120,60,.12);border-color:rgba(192,120,60,.38);color:#a8652b}
 .sb-name{flex:1;min-width:0;font-weight:800;overflow-wrap:anywhere}
-.sb-class{font-size:11px;font-weight:900;color:hsl(var(--h,210) 65% 48%);background:hsl(var(--h,210) 70% 50% / .15);border-radius:20px;padding:2px 8px;margin-left:6px;white-space:nowrap}
+.sb-class{font-size:12px;font-weight:700;color:var(--text-main);margin-left:8px;white-space:nowrap}
 .sb-val{font-weight:900;font-size:18px;color:var(--primary-blue);font-variant-numeric:tabular-nums}
 .sb-aw{display:flex;gap:10px;align-items:center}
 .sb-aw span{display:inline-flex;align-items:center;gap:3px;font-weight:900;font-size:14px}
 .sb-aw img{width:24px;height:24px}
+.sb-awh{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;color:var(--text-sub);margin:14px 0 4px}
+.sb-awh img{width:26px;height:26px}
+.sb-awh:first-of-type{margin-top:4px}
 .sb-empty{text-align:center;color:var(--text-sub);font-weight:700;padding:18px 0}
 .pl-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;background:rgba(49,130,206,.15);color:var(--primary-blue);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;text-transform:uppercase}
 .pm-rating{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -2506,11 +2509,6 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         draw();
     }
 
-    // Each grade gets its own badge color in the school leaderboard
-    function gradeHue(group) {
-        const g = parseInt(group, 10);
-        return Number.isFinite(g) ? ({ 7: 150, 8: 195, 9: 260, 10: 330, 11: 20 }[g] ?? 210) : 40;
-    }
     let schoolList = null, schoolMetric = 'goals';
     async function renderSchoolLeaderboard() {
         const box = document.getElementById('schoolBoard');
@@ -2542,14 +2540,26 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
             });
         }
         const tabs = [['goals', '⚽ Goals'], ['assists', '🅰️ Assists'], ['mvp', '🏆 MVP'], ['awards', '🏅 Awards']];
-        const key = schoolMetric === 'awards' ? 'awTotal' : schoolMetric;
-        const rows = schoolList.filter(p => p[key] > 0)
-            .sort((a, b) => (b[key] - a[key]) || (b.goals - a.goals) || a.name.localeCompare(b.name)).slice(0, 10);
-        const val = p => schoolMetric !== 'awards' ? `<span class="sb-val">${p[key]}</span>` :
-            `<span class="sb-aw">${AWARD_DEFS.filter(d => p.aw[d.key]).map(d => `<span><img src="${awardImgSrc(d.key)}" alt="${esc(d.title)}" title="${esc(d.title)}">${p.aw[d.key]}</span>`).join('')}</span>`;
-        box.innerHTML = `<div class="sb-tabs">${tabs.map(t => `<button class="sb-tab ${schoolMetric === t[0] ? 'active' : ''}" onclick="schoolMetric='${t[0]}';renderSchoolLeaderboard()">${t[1]}</button>`).join('')}</div>` +
-            (rows.length ? rows.map((p, i) => `<div class="sb-row"><span class="sb-rank ${i < 3 ? 'r' + (i + 1) : ''}">${i + 1}</span><span class="sb-name">${esc(p.name)}<span class="sb-class" style="--h:${gradeHue(p.group)}">${esc(p.group)}</span></span>${val(p)}</div>`).join('')
-                : '<div class="sb-empty">No data yet. It appears after the first matches are played.</div>');
+        const emoji = { goals: '⚽', assists: '🅰️', mvp: '🏆' };
+        const rankCls = i => 'sb-rank r' + (i + 1);
+        const nameHtml = p => `<span class="sb-name">${esc(p.name)}<span class="sb-class">${esc(p.group)}</span></span>`;
+        let body;
+        if (schoolMetric === 'awards') {
+            body = AWARD_DEFS.map(def => {
+                const list = schoolList.filter(p => p.aw[def.key] > 0)
+                    .sort((x, y) => (y.aw[def.key] - x.aw[def.key]) || (y.goals - x.goals) || x.name.localeCompare(y.name)).slice(0, 3);
+                return `<div class="sb-awh"><img src="${awardImgSrc(def.key)}" alt="${esc(def.title)}"><span>${esc(def.title)}</span></div>` +
+                    (list.length ? list.map((p, i) => `<div class="sb-row"><span class="${rankCls(i)}">${i + 1}</span>${nameHtml(p)}<span class="sb-val">${p.aw[def.key]}</span></div>`).join('')
+                        : '<div class="sb-empty">No winners yet.</div>');
+            }).join('');
+        } else {
+            const key = schoolMetric;
+            const rows = schoolList.filter(p => p[key] > 0)
+                .sort((x, y) => (y[key] - x[key]) || (y.goals - x.goals) || x.name.localeCompare(y.name)).slice(0, 3);
+            body = rows.length ? rows.map((p, i) => `<div class="sb-row"><span class="${rankCls(i)}">${i + 1}</span>${nameHtml(p)}<span class="sb-val">${emoji[key]} ${p[key]}</span></div>`).join('')
+                : '<div class="sb-empty">No data yet. It appears after the first matches are played.</div>';
+        }
+        box.innerHTML = `<div class="sb-tabs">${tabs.map(t => `<button class="sb-tab ${schoolMetric === t[0] ? 'active' : ''}" onclick="schoolMetric='${t[0]}';renderSchoolLeaderboard()">${t[1]}</button>`).join('')}</div>` + body;
     }
     window.addEventListener('hashchange', () => location.reload());
     async function restoreAdminSession() {
