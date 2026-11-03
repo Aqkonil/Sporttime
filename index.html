@@ -962,6 +962,8 @@ body.no-group .brand-st{display:none}
 .sb-table th{font-size:15px;font-weight:900;color:var(--text-sub);text-align:center;padding:6px 6px 10px}
 .sb-table td{text-align:center;padding:10px 6px;border-top:1px solid var(--card-border);font-weight:900;font-size:16px;font-variant-numeric:tabular-nums}
 .sb-table th.l,.sb-table td.l{text-align:left}
+.sb-table th img{width:22px;height:22px;vertical-align:middle}
+.sb-table th,.sb-table td{padding-left:3px;padding-right:3px}
 .sb-table td.l{font-size:15px;min-width:130px}
 .sb-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .sb-col{min-width:0}
@@ -2589,8 +2591,8 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
         let body;
         if (schoolMetric === 'table') {
             const rows = schoolTableRows();
-            body = rows.length ? `<div style="overflow-x:auto"><table class="sb-table"><thead><tr><th>#</th><th class="l">Player</th><th>⚽</th><th>🅰️</th><th>🏆</th><th>🏅</th></tr></thead><tbody>` +
-                rows.map((p, i) => `<tr><td><span class="${rankCls(i)}">${i + 1}</span></td><td class="l">${nameHtml(p)}</td><td>${p.goals}</td><td>${p.assists}</td><td>${p.mvp}</td><td>${p.awTotal}</td></tr>`).join('') +
+            body = rows.length ? `<div style="overflow-x:auto"><table class="sb-table"><thead><tr><th>#</th><th class="l">Player</th><th>⚽</th><th>🅰️</th><th>🏆</th>${AWARD_DEFS.map(d => `<th><img src="${awardImgSrc(d.key)}" alt="${esc(d.title)}" title="${esc(d.title)}"></th>`).join('')}</tr></thead><tbody>` +
+                rows.map((p, i) => `<tr><td><span class="${rankCls(i)}">${i + 1}</span></td><td class="l">${nameHtml(p)}</td><td>${p.goals}</td><td>${p.assists}</td><td>${p.mvp}</td>${AWARD_DEFS.map(d => `<td>${p.aw[d.key] || 0}</td>`).join('')}</tr>`).join('') +
                 `</tbody></table></div>` : '<div class="sb-empty">No data yet. It appears after the first matches are played.</div>';
         } else if (schoolMetric === 'awards') {
             body = '<div class="sb-cols">' + AWARD_DEFS.map(def => {
@@ -5488,6 +5490,7 @@ function syncAllGoalRows(saved) {
     async function buildSchoolTableImage() {
         await document.fonts.ready;
         const rows = schoolTableRows();
+        const icons = await Promise.all(AWARD_DEFS.map(d => loadAwardIcon(d.key)));
         const W = 1080, pad = 56, rowH = 96, headH = 76, inner = 24;
         const cardTop = 200;
         const cardH = inner * 2 + headH + Math.max(1, rows.length) * rowH;
@@ -5500,10 +5503,11 @@ function syncAllGoalRows(saved) {
         shareHeader(x, W, pad, 'SCHOOL LEADERBOARD · ALL STATS');
         shareCard(x, pad, cardTop, W - pad * 2, cardH);
 
-        const cols = ['⚽', '🅰️', '🏆', '🏅'];
-        const colX = cols.map((_, k) => W - pad - 85 - (3 - k) * 110);
+        const colGap = 90;
+        const colX = [0, 1, 2, 3, 4, 5].map(k => W - pad - 60 - (5 - k) * colGap);
         let y = cardTop + inner;
-        cols.forEach((e, k) => shareDrawEmoji(x, e, colX[k], y + headH / 2, 38));
+        ['⚽', '🅰️', '🏆'].forEach((e, k) => shareDrawEmoji(x, e, colX[k], y + headH / 2, 38));
+        icons.forEach((img, k) => { if (img) x.drawImage(img, colX[3 + k] - 22, y + headH / 2 - 22, 44, 44); });
         y += headH;
         if (!rows.length) {
             x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#a0aec0'; x.font = SF('700', 26);
@@ -5520,24 +5524,21 @@ function syncAllGoalRows(saved) {
             const cy = y + rowH / 2, st = rankStyle[i];
             x.fillStyle = '#edf2f7'; x.fillRect(pad + 40, y, W - pad * 2 - 80, 2);
             x.fillStyle = st.bg; x.strokeStyle = st.line; x.lineWidth = 2;
-            x.beginPath(); x.arc(pad + 64, cy, 26, 0, Math.PI * 2); x.fill(); x.stroke();
-            x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = st.text; x.font = SF('900', 28);
-            x.fillText(String(i + 1), pad + 64, cy + 1);
+            x.beginPath(); x.arc(pad + 60, cy, 24, 0, Math.PI * 2); x.fill(); x.stroke();
+            x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = st.text; x.font = SF('900', 26);
+            x.fillText(String(i + 1), pad + 60, cy + 1);
 
-            const nameX = pad + 112;
-            x.textAlign = 'left'; x.font = SF('800', 30); x.fillStyle = '#1a202c';
-            const nm = shareFit(x, p.name, colX[0] - 55 - nameX - 110);
-            x.fillText(nm, nameX, cy + 1);
-            const nw = x.measureText(nm).width;
-            x.font = SF('800', 20);
-            const g = String(p.group), gw = x.measureText(g).width + 24;
-            x.fillStyle = '#edf2f7'; x.strokeStyle = '#e2e8f0'; x.lineWidth = 2;
-            shareRR(x, nameX + nw + 10, cy - 15, gw, 30, 15); x.fill(); x.stroke();
-            x.fillStyle = '#4a5568'; x.textAlign = 'center';
-            x.fillText(g, nameX + nw + 10 + gw / 2, cy + 1);
+            const nameX = pad + 104;
+            x.textAlign = 'left'; x.fillStyle = '#1a202c'; x.font = SF('800', 27);
+            x.fillText(shareFit(x, p.name, colX[0] - 45 - nameX), nameX, cy - 13);
+            x.fillStyle = '#718096'; x.font = SF('700', 20);
+            x.fillText(String(p.group), nameX, cy + 17);
 
-            x.fillStyle = '#1a202c'; x.font = SF('900', 34);
-            [p.goals, p.assists, p.mvp, p.awTotal].forEach((v, k) => x.fillText(String(v), colX[k], cy + 1));
+            x.textAlign = 'center'; x.fillStyle = '#1a202c'; x.font = SF('900', 32);
+            [p.goals, p.assists, p.mvp, ...AWARD_DEFS.map(d => p.aw[d.key] || 0)].forEach((v, k) => {
+                x.fillStyle = v ? '#1a202c' : '#cbd5e0';
+                x.fillText(String(v), colX[k], cy + 1);
+            });
             y += rowH;
         });
         shareFooter(x, W, H);
