@@ -963,6 +963,16 @@ body.no-group .brand-st{display:none}
 .sb-table td{text-align:center;padding:10px 6px;border-top:1px solid var(--card-border);font-weight:900;font-size:16px;font-variant-numeric:tabular-nums}
 .sb-table th.l,.sb-table td.l{text-align:left}
 .sb-table td.l{font-size:15px;min-width:130px}
+.sb-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sb-col{min-width:0}
+.sb-colh{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:900;text-transform:uppercase;color:var(--text-sub);text-align:center;margin-bottom:6px}
+.sb-colh img{width:32px;height:32px}
+.sb-crow{display:flex;align-items:center;gap:5px;padding:7px 0;border-top:1px solid var(--card-border)}
+.sb-cname{flex:1;min-width:0;font-weight:800;font-size:12px;overflow-wrap:anywhere;line-height:1.2}
+.sb-cname small{display:block;font-size:10px;font-weight:700;color:var(--text-sub)}
+.sb-crow b{font-size:15px;color:var(--primary-blue);font-variant-numeric:tabular-nums}
+.sb-rank.sm{width:20px;height:20px;line-height:18px;font-size:11px}
+.sb-empty.sm{padding:10px 0}
 .sb-empty{text-align:center;color:var(--text-sub);font-weight:700;padding:18px 0}
 .pl-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;background:rgba(49,130,206,.15);color:var(--primary-blue);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;text-transform:uppercase}
 .pm-rating{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -2583,13 +2593,13 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
                 rows.map((p, i) => `<tr><td><span class="${rankCls(i)}">${i + 1}</span></td><td class="l">${nameHtml(p)}</td><td>${p.goals}</td><td>${p.assists}</td><td>${p.mvp}</td><td>${p.awTotal}</td></tr>`).join('') +
                 `</tbody></table></div>` : '<div class="sb-empty">No data yet. It appears after the first matches are played.</div>';
         } else if (schoolMetric === 'awards') {
-            body = AWARD_DEFS.map(def => {
+            body = '<div class="sb-cols">' + AWARD_DEFS.map(def => {
                 const list = schoolList.filter(p => p.aw[def.key] > 0)
                     .sort((x, y) => (y.aw[def.key] - x.aw[def.key]) || (y.goals - x.goals) || x.name.localeCompare(y.name)).slice(0, 5);
-                return `<div class="sb-awh"><img src="${awardImgSrc(def.key)}" alt="${esc(def.title)}"><span>${esc(def.title)}</span></div>` +
-                    (list.length ? list.map((p, i) => `<div class="sb-row"><span class="${rankCls(i)}">${i + 1}</span>${nameHtml(p)}<span class="sb-val">${p.aw[def.key]}</span></div>`).join('')
-                        : '<div class="sb-empty">No winners yet.</div>');
-            }).join('');
+                return `<div class="sb-col"><div class="sb-colh"><img src="${awardImgSrc(def.key)}" alt="${esc(def.title)}"><span>${esc(def.title)}</span></div>` +
+                    (list.length ? list.map((p, i) => `<div class="sb-crow"><span class="${rankCls(i)} sm">${i + 1}</span><span class="sb-cname">${esc(p.name)}<small>${esc(p.group)}</small></span><b>${p.aw[def.key]}</b></div>`).join('')
+                        : '<div class="sb-empty sm">—</div>') + '</div>';
+            }).join('') + '</div>';
         } else {
             const key = schoolMetric;
             const rows = schoolList.filter(p => p[key] > 0)
@@ -5534,11 +5544,70 @@ function syncAllGoalRows(saved) {
         return new Promise(resolve => c.toBlob(resolve, 'image/png'));
     }
 
+    async function buildSchoolAwardsImage() {
+        await document.fonts.ready;
+        const W = 1080, pad = 56, inner = 24, rowH = 92, headH = 150, gap = 20;
+        const cols = [];
+        for (const def of AWARD_DEFS) {
+            const rows = schoolList.filter(p => p.aw[def.key] > 0)
+                .sort((a, b) => (b.aw[def.key] - a.aw[def.key]) || (b.goals - a.goals) || a.name.localeCompare(b.name)).slice(0, 5)
+                .map(p => ({ p, val: p.aw[def.key] }));
+            cols.push({ title: def.title, icon: await loadAwardIcon(def.key), rows });
+        }
+        const maxRows = Math.max(1, ...cols.map(c => c.rows.length));
+        const cardTop = 200, cardH = inner * 2 + headH + maxRows * rowH;
+        const H = cardTop + cardH + 110;
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const x = c.getContext('2d');
+        if (!x) return null;
+        shareBackground(x, W, H);
+        shareHeader(x, W, pad, 'SCHOOL LEADERBOARD · AWARDS');
+        shareCard(x, pad, cardTop, W - pad * 2, cardH);
+
+        const colW = (W - pad * 2 - inner * 2 - gap * 2) / 3;
+        const rankStyle = [
+            { bg: 'rgba(214,158,46,.16)', line: 'rgba(214,158,46,.55)', text: '#a97c0e' },
+            { bg: 'rgba(113,128,150,.14)', line: 'rgba(113,128,150,.45)', text: '#718096' },
+            { bg: 'rgba(192,120,60,.14)', line: 'rgba(192,120,60,.5)', text: '#a8652b' }
+        ];
+        const plain = { bg: 'rgba(160,174,192,.10)', line: '#e2e8f0', text: '#718096' };
+        cols.forEach((col, k) => {
+            const cx0 = pad + inner + k * (colW + gap), mid = cx0 + colW / 2;
+            if (col.icon) x.drawImage(col.icon, mid - 32, cardTop + inner + 6, 64, 64);
+            x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#718096'; x.font = SF('900', 22);
+            x.fillText(shareFit(x, col.title.toUpperCase(), colW - 10), mid, cardTop + inner + 104);
+            let y = cardTop + inner + headH;
+            if (!col.rows.length) {
+                x.fillStyle = '#a0aec0'; x.font = SF('700', 26); x.fillText('—', mid, y + rowH / 2);
+            }
+            col.rows.forEach((r, i) => {
+                const cy = y + rowH / 2, st = rankStyle[i] || plain;
+                x.fillStyle = '#edf2f7'; x.fillRect(cx0, y, colW, 2);
+                x.fillStyle = st.bg; x.strokeStyle = st.line; x.lineWidth = 2;
+                x.beginPath(); x.arc(cx0 + 20, cy, 17, 0, Math.PI * 2); x.fill(); x.stroke();
+                x.textAlign = 'center'; x.fillStyle = st.text; x.font = SF('900', 20);
+                x.fillText(String(i + 1), cx0 + 20, cy + 1);
+                const nx = cx0 + 48, maxW = colW - 48 - 52;
+                x.textAlign = 'left'; x.fillStyle = '#1a202c'; x.font = SF('800', 23);
+                x.fillText(shareFit(x, r.p.name, maxW), nx, cy - 12);
+                x.fillStyle = '#718096'; x.font = SF('700', 18);
+                x.fillText(String(r.p.group), nx, cy + 15);
+                x.textAlign = 'right'; x.fillStyle = '#2b6cb0'; x.font = SF('900', 32);
+                x.fillText(String(r.val), cx0 + colW - 4, cy + 1);
+                y += rowH;
+            });
+        });
+        shareFooter(x, W, H);
+        return new Promise(resolve => c.toBlob(resolve, 'image/png'));
+    }
+
     async function buildSchoolLeaderboardImage() {
         if (!schoolList) return null;
         await document.fonts.ready;
         const W = 1080, pad = 56, rowH = 96, titleH = 66;
         if (schoolMetric === 'table') return buildSchoolTableImage();
+        if (schoolMetric === 'awards') return buildSchoolAwardsImage();
         const label = { goals: 'GOALS', assists: 'ASSISTS', mvp: 'MVP', awards: 'AWARDS' }[schoolMetric] || 'GOALS';
         const emoji = { goals: '⚽', assists: '🅰️', mvp: '🏆' }[schoolMetric];
         const top3 = (key, valueOf) => schoolList.filter(p => valueOf(p) > 0)
