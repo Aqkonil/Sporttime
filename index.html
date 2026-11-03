@@ -4143,7 +4143,7 @@ function syncAllGoalRows(saved) {
          *
          * Goal      = 2 MVP points
          * Assist    = 1 MVP point
-         * Own Goal  = -1 MVP point
+         * Own Goal  = -2 MVP points (takes away the value of a goal)
          *
          * Example:
          * 2 goals + 1 assist = 5 points
@@ -4158,12 +4158,12 @@ function syncAllGoalRows(saved) {
 
             if (scorer) {
                 if (e.isOg) {
-                    // Own goal: negative MVP impact
+                    // Own goal: negative MVP impact, the opposite of a goal (-2)
                     scorer.rating =
                         Math.max(0, scorer.rating - RATING_RULES.ownGoal);
 
                     matchScores[scorer.id] =
-                        (matchScores[scorer.id] || 0) - 1;
+                        (matchScores[scorer.id] || 0) - 2;
 
                 } else {
                     // Normal goal
