@@ -2550,10 +2550,19 @@ function shareCard(ctx, x, y, w, h, r = 28, fill = '#fff') {
     }
 
     let schoolList = null, schoolMetric = 'goals';
-    // All stats table: top 5 by goals, then assists, MVP, awards
+    // All stats table: top 5 by the total of all stats (goals + assists + MVP + personal awards);
+    // on a tie compare goals first, then assists, MVP, and each award in column order
     function schoolTableRows() {
-        return (schoolList || []).filter(p => p.goals > 0 || p.assists > 0 || p.mvp > 0 || p.awTotal > 0)
-            .sort((a, b) => (b.goals - a.goals) || (b.assists - a.assists) || (b.mvp - a.mvp) || (b.awTotal - a.awTotal) || a.name.localeCompare(b.name)).slice(0, 5);
+        const total = p => p.goals + p.assists + p.mvp + AWARD_DEFS.reduce((n, d) => n + (p.aw[d.key] || 0), 0);
+        return (schoolList || []).filter(p => total(p) > 0)
+            .sort((a, b) => {
+                const t = total(b) - total(a);
+                if (t) return t;
+                const base = (b.goals - a.goals) || (b.assists - a.assists) || (b.mvp - a.mvp);
+                if (base) return base;
+                for (const d of AWARD_DEFS) { const v = (b.aw[d.key] || 0) - (a.aw[d.key] || 0); if (v) return v; }
+                return a.name.localeCompare(b.name);
+            }).slice(0, 5);
     }
     async function renderSchoolLeaderboard() {
         const box = document.getElementById('schoolBoard');
